@@ -1,0 +1,591 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7F1E7E851C516FF5000B734B /* MondoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F1E7E841C516FF5000B734B /* MondoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F1E7E8C1C516FF6000B734B /* MondoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F1E7E811C516FF5000B734B /* MondoKit.framework */; };
+		7F1E7E911C516FF6000B734B /* MondoKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7E901C516FF6000B734B /* MondoKitTests.swift */; };
+		7F1E7EB41C51780C000B734B /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F1E7EB31C51780C000B734B /* Alamofire.framework */; };
+		7F1E7EB61C517931000B734B /* MondoKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F1E7EB51C517931000B734B /* MondoKeys.plist */; };
+		7F1E7EBE1C517F33000B734B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EBD1C517F33000B734B /* AppDelegate.swift */; };
+		7F1E7EC01C517F33000B734B /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EBF1C517F33000B734B /* MasterViewController.swift */; };
+		7F1E7EC21C517F33000B734B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EC11C517F33000B734B /* DetailViewController.swift */; };
+		7F1E7EC51C517F33000B734B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F1E7EC31C517F33000B734B /* Main.storyboard */; };
+		7F1E7EC71C517F33000B734B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1E7EC61C517F33000B734B /* Assets.xcassets */; };
+		7F1E7ECA1C517F33000B734B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F1E7EC81C517F33000B734B /* LaunchScreen.storyboard */; };
+		7F1E7ED01C517FD4000B734B /* MondoKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F1E7ECF1C517FD4000B734B /* MondoKeys.plist */; };
+		7F1E7ED21C518166000B734B /* MondoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7ED11C518166000B734B /* MondoAPI.swift */; };
+		7F1E7ED31C5183A2000B734B /* MondoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F1E7E811C516FF5000B734B /* MondoKit.framework */; };
+		7F1E7ED81C518797000B734B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7ED71C518797000B734B /* LoginController.swift */; };
+		7F1E7EDA1C5417E0000B734B /* MondoAPIOAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7ED91C5417E0000B734B /* MondoAPIOAuth.swift */; };
+		7F1E7EDC1C543BA9000B734B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F1E7EDB1C543BA9000B734B /* SwiftyJSON.framework */; };
+		7F1E7EDE1C543EFD000B734B /* SwiftyJSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EDD1C543EFD000B734B /* SwiftyJSONDecodable.swift */; };
+		7F1E7EE01C5442A4000B734B /* MondoAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EDF1C5442A4000B734B /* MondoAccount.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7F1E7E8D1C516FF6000B734B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F1E7E781C516FF5000B734B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F1E7E801C516FF5000B734B;
+			remoteInfo = MondoKit;
+		};
+		7F1E7ED41C5183A8000B734B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F1E7E781C516FF5000B734B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F1E7E801C516FF5000B734B;
+			remoteInfo = MondoKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7F1E7E811C516FF5000B734B /* MondoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MondoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F1E7E841C516FF5000B734B /* MondoKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MondoKit.h; sourceTree = "<group>"; };
+		7F1E7E861C516FF5000B734B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F1E7E8B1C516FF6000B734B /* MondoKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MondoKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F1E7E901C516FF6000B734B /* MondoKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondoKitTests.swift; sourceTree = "<group>"; };
+		7F1E7E921C516FF6000B734B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F1E7EB31C51780C000B734B /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Carthage/Checkouts/Alamofire/build/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
+		7F1E7EB51C517931000B734B /* MondoKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MondoKeys.plist; sourceTree = "<group>"; };
+		7F1E7EBB1C517F33000B734B /* MondoKitTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MondoKitTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F1E7EBD1C517F33000B734B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7F1E7EBF1C517F33000B734B /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		7F1E7EC11C517F33000B734B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		7F1E7EC41C517F33000B734B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7F1E7EC61C517F33000B734B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7F1E7EC91C517F33000B734B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7F1E7ECB1C517F33000B734B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F1E7ECF1C517FD4000B734B /* MondoKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MondoKeys.plist; sourceTree = "<group>"; };
+		7F1E7ED11C518166000B734B /* MondoAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoAPI.swift; sourceTree = "<group>"; };
+		7F1E7ED71C518797000B734B /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		7F1E7ED91C5417E0000B734B /* MondoAPIOAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoAPIOAuth.swift; sourceTree = "<group>"; };
+		7F1E7EDB1C543BA9000B734B /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Carthage/Checkouts/SwiftyJSON/build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
+		7F1E7EDD1C543EFD000B734B /* SwiftyJSONDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSONDecodable.swift; sourceTree = "<group>"; };
+		7F1E7EDF1C5442A4000B734B /* MondoAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoAccount.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7F1E7E7D1C516FF5000B734B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F1E7EDC1C543BA9000B734B /* SwiftyJSON.framework in Frameworks */,
+				7F1E7EB41C51780C000B734B /* Alamofire.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F1E7E881C516FF6000B734B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F1E7E8C1C516FF6000B734B /* MondoKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F1E7EB81C517F33000B734B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F1E7ED31C5183A2000B734B /* MondoKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7F1E7E771C516FF5000B734B = {
+			isa = PBXGroup;
+			children = (
+				7F1E7EDB1C543BA9000B734B /* SwiftyJSON.framework */,
+				7F1E7EB31C51780C000B734B /* Alamofire.framework */,
+				7F1E7E831C516FF5000B734B /* MondoKit */,
+				7F1E7E8F1C516FF6000B734B /* MondoKitTests */,
+				7F1E7EBC1C517F33000B734B /* MondoKitTestApp */,
+				7F1E7E821C516FF5000B734B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7F1E7E821C516FF5000B734B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7F1E7E811C516FF5000B734B /* MondoKit.framework */,
+				7F1E7E8B1C516FF6000B734B /* MondoKitTests.xctest */,
+				7F1E7EBB1C517F33000B734B /* MondoKitTestApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7F1E7E831C516FF5000B734B /* MondoKit */ = {
+			isa = PBXGroup;
+			children = (
+				7F1E7EDD1C543EFD000B734B /* SwiftyJSONDecodable.swift */,
+				7F1E7E841C516FF5000B734B /* MondoKit.h */,
+				7F1E7E861C516FF5000B734B /* Info.plist */,
+				7F1E7ED11C518166000B734B /* MondoAPI.swift */,
+				7F1E7ED91C5417E0000B734B /* MondoAPIOAuth.swift */,
+				7F1E7EDF1C5442A4000B734B /* MondoAccount.swift */,
+			);
+			path = MondoKit;
+			sourceTree = "<group>";
+		};
+		7F1E7E8F1C516FF6000B734B /* MondoKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				7F1E7E901C516FF6000B734B /* MondoKitTests.swift */,
+				7F1E7E921C516FF6000B734B /* Info.plist */,
+				7F1E7EB51C517931000B734B /* MondoKeys.plist */,
+			);
+			path = MondoKitTests;
+			sourceTree = "<group>";
+		};
+		7F1E7EBC1C517F33000B734B /* MondoKitTestApp */ = {
+			isa = PBXGroup;
+			children = (
+				7F1E7ED61C518766000B734B /* Login */,
+				7F1E7ECF1C517FD4000B734B /* MondoKeys.plist */,
+				7F1E7EBD1C517F33000B734B /* AppDelegate.swift */,
+				7F1E7EBF1C517F33000B734B /* MasterViewController.swift */,
+				7F1E7EC11C517F33000B734B /* DetailViewController.swift */,
+				7F1E7EC31C517F33000B734B /* Main.storyboard */,
+				7F1E7EC61C517F33000B734B /* Assets.xcassets */,
+				7F1E7EC81C517F33000B734B /* LaunchScreen.storyboard */,
+				7F1E7ECB1C517F33000B734B /* Info.plist */,
+			);
+			path = MondoKitTestApp;
+			sourceTree = "<group>";
+		};
+		7F1E7ED61C518766000B734B /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				7F1E7ED71C518797000B734B /* LoginController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7F1E7E7E1C516FF5000B734B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F1E7E851C516FF5000B734B /* MondoKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7F1E7E801C516FF5000B734B /* MondoKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F1E7E951C516FF6000B734B /* Build configuration list for PBXNativeTarget "MondoKit" */;
+			buildPhases = (
+				7F1E7E7C1C516FF5000B734B /* Sources */,
+				7F1E7E7D1C516FF5000B734B /* Frameworks */,
+				7F1E7E7E1C516FF5000B734B /* Headers */,
+				7F1E7E7F1C516FF5000B734B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MondoKit;
+			productName = MondoKit;
+			productReference = 7F1E7E811C516FF5000B734B /* MondoKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		7F1E7E8A1C516FF6000B734B /* MondoKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F1E7E981C516FF6000B734B /* Build configuration list for PBXNativeTarget "MondoKitTests" */;
+			buildPhases = (
+				7F1E7E871C516FF6000B734B /* Sources */,
+				7F1E7E881C516FF6000B734B /* Frameworks */,
+				7F1E7E891C516FF6000B734B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7F1E7E8E1C516FF6000B734B /* PBXTargetDependency */,
+			);
+			name = MondoKitTests;
+			productName = MondoKitTests;
+			productReference = 7F1E7E8B1C516FF6000B734B /* MondoKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7F1E7EBA1C517F33000B734B /* MondoKitTestApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F1E7ECC1C517F33000B734B /* Build configuration list for PBXNativeTarget "MondoKitTestApp" */;
+			buildPhases = (
+				7F1E7EB71C517F33000B734B /* Sources */,
+				7F1E7EB81C517F33000B734B /* Frameworks */,
+				7F1E7EB91C517F33000B734B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7F1E7ED51C5183A8000B734B /* PBXTargetDependency */,
+			);
+			name = MondoKitTestApp;
+			productName = MondoKitTestApp;
+			productReference = 7F1E7EBB1C517F33000B734B /* MondoKitTestApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7F1E7E781C516FF5000B734B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Mike Pollard";
+				TargetAttributes = {
+					7F1E7E801C516FF5000B734B = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					7F1E7E8A1C516FF6000B734B = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					7F1E7EBA1C517F33000B734B = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 7F1E7E7B1C516FF5000B734B /* Build configuration list for PBXProject "MondoKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7F1E7E771C516FF5000B734B;
+			productRefGroup = 7F1E7E821C516FF5000B734B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7F1E7E801C516FF5000B734B /* MondoKit */,
+				7F1E7E8A1C516FF6000B734B /* MondoKitTests */,
+				7F1E7EBA1C517F33000B734B /* MondoKitTestApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7F1E7E7F1C516FF5000B734B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F1E7E891C516FF6000B734B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F1E7EB61C517931000B734B /* MondoKeys.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F1E7EB91C517F33000B734B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F1E7ECA1C517F33000B734B /* LaunchScreen.storyboard in Resources */,
+				7F1E7EC71C517F33000B734B /* Assets.xcassets in Resources */,
+				7F1E7ED01C517FD4000B734B /* MondoKeys.plist in Resources */,
+				7F1E7EC51C517F33000B734B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7F1E7E7C1C516FF5000B734B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F1E7EDE1C543EFD000B734B /* SwiftyJSONDecodable.swift in Sources */,
+				7F1E7EDA1C5417E0000B734B /* MondoAPIOAuth.swift in Sources */,
+				7F1E7ED21C518166000B734B /* MondoAPI.swift in Sources */,
+				7F1E7EE01C5442A4000B734B /* MondoAccount.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F1E7E871C516FF6000B734B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F1E7E911C516FF6000B734B /* MondoKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F1E7EB71C517F33000B734B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F1E7EC21C517F33000B734B /* DetailViewController.swift in Sources */,
+				7F1E7ED81C518797000B734B /* LoginController.swift in Sources */,
+				7F1E7EC01C517F33000B734B /* MasterViewController.swift in Sources */,
+				7F1E7EBE1C517F33000B734B /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7F1E7E8E1C516FF6000B734B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7F1E7E801C516FF5000B734B /* MondoKit */;
+			targetProxy = 7F1E7E8D1C516FF6000B734B /* PBXContainerItemProxy */;
+		};
+		7F1E7ED51C5183A8000B734B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7F1E7E801C516FF5000B734B /* MondoKit */;
+			targetProxy = 7F1E7ED41C5183A8000B734B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7F1E7EC31C517F33000B734B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7F1E7EC41C517F33000B734B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7F1E7EC81C517F33000B734B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7F1E7EC91C517F33000B734B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7F1E7E931C516FF6000B734B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7F1E7E941C516FF6000B734B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		7F1E7E961C516FF6000B734B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftyJSON/build/Debug-iphoneos",
+				);
+				INFOPLIST_FILE = MondoKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.betware.MondoKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7F1E7E971C516FF6000B734B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftyJSON/build/Debug-iphoneos",
+				);
+				INFOPLIST_FILE = MondoKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.betware.MondoKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		7F1E7E991C516FF6000B734B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = MondoKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.betware.MondoKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7F1E7E9A1C516FF6000B734B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = MondoKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.betware.MondoKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7F1E7ECD1C517F33000B734B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = MondoKitTestApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.betware.MondoKitTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7F1E7ECE1C517F33000B734B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = MondoKitTestApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.betware.MondoKitTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7F1E7E7B1C516FF5000B734B /* Build configuration list for PBXProject "MondoKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F1E7E931C516FF6000B734B /* Debug */,
+				7F1E7E941C516FF6000B734B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7F1E7E951C516FF6000B734B /* Build configuration list for PBXNativeTarget "MondoKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F1E7E961C516FF6000B734B /* Debug */,
+				7F1E7E971C516FF6000B734B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7F1E7E981C516FF6000B734B /* Build configuration list for PBXNativeTarget "MondoKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F1E7E991C516FF6000B734B /* Debug */,
+				7F1E7E9A1C516FF6000B734B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7F1E7ECC1C517F33000B734B /* Build configuration list for PBXNativeTarget "MondoKitTestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F1E7ECD1C517F33000B734B /* Debug */,
+				7F1E7ECE1C517F33000B734B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7F1E7E781C516FF5000B734B /* Project object */;
+}
