@@ -11,11 +11,18 @@ import SwiftyJSON
 
 public struct MondoAccount {
     
-    let accountNumber : String
-    let created : NSDate
-    let description : String
-    let accountId : String
-    let sortCode : String
+    public let accountNumber : String
+    public let created : NSDate?
+    public let description : String
+    public let accountId : String
+    public let sortCode : String
+}
+
+public struct MondoAccountBalance {
+    
+    public let balance : Int
+    public let currency : String
+    public let spendToday : Int
 }
 
 extension MondoAccount : SwiftyJSONDecodable {
@@ -23,10 +30,22 @@ extension MondoAccount : SwiftyJSONDecodable {
     init(json: JSON) throws {
         
         accountNumber = try json.requiredValueForKey("account_number")
+        
         let createdString : String = try json.requiredValueForKey("created")
-        created = NSDate.dateFromTimestamp(createdString)!
+        created = NSDate.dateFromTimestamp(createdString)
+        
         description = try json.requiredValueForKey("description")
         accountId = try json.requiredValueForKey("id")
         sortCode = try json.requiredValueForKey("sort_code")
+    }
+}
+
+extension MondoAccountBalance : SwiftyJSONDecodable {
+    
+    init(json: JSON) throws {
+        
+        balance = try json.requiredValueForKey("balance")
+        currency = try json.requiredValueForKey("currency")
+        spendToday = try json.requiredValueForKey("spend_today")
     }
 }

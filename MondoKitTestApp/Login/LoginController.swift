@@ -18,21 +18,30 @@ extension LoginController {
     
     @IBAction func loginPressed(sender : UIButton) {
         
-        let oauthViewController = MondoAPI.instance.newAuthViewController() { [unowned self] (success, error) in
+        let oauthViewController = MondoAPI.instance.newAuthViewController() { (success, error) in
             
             if success {
-                
-                MondoAPI.instance.listAccounts() { _ in }
                 
                 self.dismissViewControllerAnimated(true) {
                     self.performSegueWithIdentifier("loginSuccess", sender: self)
                 }
             }
+            else if let errorWithReason = error as? ErrorWithLocalizedFailureReason {
+                debugPrint(errorWithReason.getLocalizedFailureReason())
+            }
             else  {
-                debugPrint(error!.getLocalizedFailureReason())
+                debugPrint(error)
             }
         }
 
         presentViewController(oauthViewController, animated: true, completion: nil)
+    }
+}
+
+extension NSError : ErrorWithLocalizedFailureReason {
+    
+    public func getLocalizedFailureReason() -> String? {
+        
+        return localizedFailureReason
     }
 }
