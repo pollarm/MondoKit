@@ -10,7 +10,7 @@
 import Foundation
 import SwiftyJSON
 
-protocol SwiftyJSONDecodable {
+public protocol SwiftyJSONDecodable {
     
     init(json: JSON) throws
     
@@ -20,7 +20,7 @@ indirect enum SwiftyJSONDecodeError : ErrorType {
     
     case NullValue
     case WrongType
-    case InvalidValue
+    case InvalidValue(String?)
     case ErrorForKey(key: String, error: SwiftyJSONDecodeError)
 }
 
@@ -30,7 +30,7 @@ extension SwiftyJSONDecodeError : CustomDebugStringConvertible {
         switch self {
         case NullValue : return "NullValue"
         case WrongType : return "WrongType"
-        case InvalidValue : return "InvalidValue"
+        case InvalidValue(let s) : return "InvalidValue(" + (s ?? "nil") + ")"
         case ErrorForKey(let key, let error) :
             return key + "." + error.debugDescription
         }
@@ -39,16 +39,25 @@ extension SwiftyJSONDecodeError : CustomDebugStringConvertible {
 
 extension Int : SwiftyJSONDecodable {
     
-    init(json: JSON) throws {
+    public init(json: JSON) throws {
         guard json != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
         guard let i = json.int else { throw SwiftyJSONDecodeError.WrongType }
         self.init(i)
     }
 }
 
-extension String : SwiftyJSONDecodable {
+extension Double : SwiftyJSONDecodable {
     
-    init(json: JSON) throws {
+    public init(json: JSON) throws {
+        guard json != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
+        guard let d = json.double else { throw SwiftyJSONDecodeError.WrongType }
+        self.init(d)
+    }
+}
+
+extension String : SwiftyJSONDecodable {
+  
+    public init(json: JSON) throws {
         guard json != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
         guard let s = json.string else { throw SwiftyJSONDecodeError.WrongType }
         self.init(s)
@@ -57,7 +66,7 @@ extension String : SwiftyJSONDecodable {
 
 extension Bool : SwiftyJSONDecodable {
     
-    init(json :JSON) throws {
+    public init(json :JSON) throws {
         guard json != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
         guard let b = json.bool else { throw SwiftyJSONDecodeError.WrongType }
         self.init(b)
@@ -114,31 +123,120 @@ extension JSON {
         return try T(json: self)
     }
 
+    func requiredAsDictionary<V: SwiftyJSONDecodable>(onDecodeElement onDecodeElement:((elementWasDecoded: V, fromJSON: JSON) throws ->())? = nil) throws -> Dictionary<String, V> {
+        
+        guard self != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
+        
+        guard let dictJSON = self.dictionary else { throw SwiftyJSONDecodeError.WrongType }
+        
+        var result = [String:V]()
+        for (k, j) in dictJSON {
+            let v : V = try j.requiredAsValue()
+            result[k] = v
+        }
+        
+        return result
+    }
+    
+    func requiredAsDictionaryForKey<V: SwiftyJSONDecodable>(key: String, onDecodeElement:((elementWasDecoded: V, fromJSON: JSON) throws ->())? = nil) throws -> Dictionary<String, V> {
+        
+        do {
+            let json = self[key]
+            return try json.requiredAsDictionary(onDecodeElement: onDecodeElement)
+        }
+        catch let error as SwiftyJSONDecodeError {
+            throw SwiftyJSONDecodeError.ErrorForKey(key: key, error: error)
+        }
+    }
 }
 
 extension SwiftyJSONDecodable where Self : RawRepresentable, Self.RawValue : SwiftyJSONDecodable {
     
-    init(json: JSON) throws {
+    public init(json: JSON) throws {
         guard json != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
         guard let rawValue = json.rawValue as? Self.RawValue else { throw SwiftyJSONDecodeError.WrongType }
         if let _ = Self(rawValue: rawValue) {
             self.init(rawValue: rawValue)!
         }
         else {
-            throw SwiftyJSONDecodeError.InvalidValue
+            throw SwiftyJSONDecodeError.InvalidValue(json.rawString())
         }
     }
     
 }
 
-extension NSDate {
+final class JSONDate : NSDate, SwiftyJSONDecodable {
     
-    static func dateFromTimestamp(timestamp : String) -> NSDate? {
-        
+    static var dateFormatter : NSDateFormatter = {
+    
         let formatter = NSDateFormatter()
         formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
         
-        return formatter.dateFromString(timestamp)
+        return formatter
+    }()
+    
+    static var dateFormatterNoMillis : NSDateFormatter = {
+        
+        let formatter = NSDateFormatter()
+        formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        
+        return formatter
+    }()
+    
+    private var _timeIntervalSinceReferenceDate : NSTimeInterval
+    override var timeIntervalSinceReferenceDate: NSTimeInterval {
+        return _timeIntervalSinceReferenceDate
+    }
+    
+    convenience init(json: JSON) throws {
+        
+        if let dateString = json.string, date = JSONDate.dateFormatter.dateFromString(dateString) {
+            
+            self.init(timeIntervalSinceReferenceDate: date.timeIntervalSinceReferenceDate)
+        }
+        else if let dateString = json.string, date = JSONDate.dateFormatterNoMillis.dateFromString(dateString) {
+            
+            self.init(timeIntervalSinceReferenceDate: date.timeIntervalSinceReferenceDate)
+        }
+        else {
+            throw SwiftyJSONDecodeError.InvalidValue(json.rawString())
+        }
+    }
+    
+    override init(timeIntervalSinceReferenceDate ti: NSTimeInterval) {
+        _timeIntervalSinceReferenceDate = ti
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+final class JSONURL : NSURL, SwiftyJSONDecodable {
+    
+    convenience init(json: JSON) throws {
+        let urlString : String = try json.requiredAsValue()
+        if let _ = NSURL(string: urlString) {
+            self.init(string: urlString, relativeToURL: nil)!
+        }
+        else {
+            throw SwiftyJSONDecodeError.InvalidValue(json.rawString())
+        }
+    }
+    
+    override init?(string URLString: String, relativeToURL baseURL: NSURL?) {
+        super.init(string: URLString, relativeToURL: baseURL)
+    }
+    
+    required convenience init(fileReferenceLiteral path: String) {
+        fatalError("init(fileReferenceLiteral:) has not been implemented")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

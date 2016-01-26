@@ -28,6 +28,12 @@
 		7F1E7EE01C5442A4000B734B /* MondoAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EDF1C5442A4000B734B /* MondoAccount.swift */; };
 		7F1E7EE31C54DFD4000B734B /* AccountsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EE21C54DFD4000B734B /* AccountsListViewController.swift */; };
 		7F1E7EE51C557013000B734B /* AccountDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EE41C557013000B734B /* AccountDetailsViewController.swift */; };
+		7F1E7EE71C557EF4000B734B /* MondoTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EE61C557EF4000B734B /* MondoTransaction.swift */; };
+		7F1E7EEA1C576911000B734B /* MondoMerchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EE91C576911000B734B /* MondoMerchant.swift */; };
+		7F1E7EEC1C576983000B734B /* MondoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EEB1C576983000B734B /* MondoModel.swift */; };
+		7F1E7EEE1C576C4A000B734B /* MondoAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EED1C576C4A000B734B /* MondoAttachment.swift */; };
+		7F1E7EF01C579C3F000B734B /* MondoCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EEF1C579C3F000B734B /* MondoCategory.swift */; };
+		7F1E7EF21C579FF4000B734B /* MondoAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EF11C579FF4000B734B /* MondoAddress.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +79,12 @@
 		7F1E7EDF1C5442A4000B734B /* MondoAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoAccount.swift; sourceTree = "<group>"; };
 		7F1E7EE21C54DFD4000B734B /* AccountsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsListViewController.swift; sourceTree = "<group>"; };
 		7F1E7EE41C557013000B734B /* AccountDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailsViewController.swift; sourceTree = "<group>"; };
+		7F1E7EE61C557EF4000B734B /* MondoTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoTransaction.swift; sourceTree = "<group>"; };
+		7F1E7EE91C576911000B734B /* MondoMerchant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoMerchant.swift; sourceTree = "<group>"; };
+		7F1E7EEB1C576983000B734B /* MondoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoModel.swift; sourceTree = "<group>"; };
+		7F1E7EED1C576C4A000B734B /* MondoAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoAttachment.swift; sourceTree = "<group>"; };
+		7F1E7EEF1C579C3F000B734B /* MondoCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoCategory.swift; sourceTree = "<group>"; };
+		7F1E7EF11C579FF4000B734B /* MondoAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoAddress.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,12 +141,12 @@
 		7F1E7E831C516FF5000B734B /* MondoKit */ = {
 			isa = PBXGroup;
 			children = (
+				7F1E7EE81C5768E9000B734B /* Model */,
 				7F1E7EDD1C543EFD000B734B /* SwiftyJSONDecodable.swift */,
 				7F1E7E841C516FF5000B734B /* MondoKit.h */,
 				7F1E7E861C516FF5000B734B /* Info.plist */,
 				7F1E7ED11C518166000B734B /* MondoAPI.swift */,
 				7F1E7ED91C5417E0000B734B /* MondoAPIOAuth.swift */,
-				7F1E7EDF1C5442A4000B734B /* MondoAccount.swift */,
 			);
 			path = MondoKit;
 			sourceTree = "<group>";
@@ -181,6 +193,20 @@
 				7F1E7EE41C557013000B734B /* AccountDetailsViewController.swift */,
 			);
 			path = Accounts;
+			sourceTree = "<group>";
+		};
+		7F1E7EE81C5768E9000B734B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7F1E7EEB1C576983000B734B /* MondoModel.swift */,
+				7F1E7EEF1C579C3F000B734B /* MondoCategory.swift */,
+				7F1E7EDF1C5442A4000B734B /* MondoAccount.swift */,
+				7F1E7EF11C579FF4000B734B /* MondoAddress.swift */,
+				7F1E7EE91C576911000B734B /* MondoMerchant.swift */,
+				7F1E7EED1C576C4A000B734B /* MondoAttachment.swift */,
+				7F1E7EE61C557EF4000B734B /* MondoTransaction.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,8 +354,14 @@
 			files = (
 				7F1E7EDE1C543EFD000B734B /* SwiftyJSONDecodable.swift in Sources */,
 				7F1E7EDA1C5417E0000B734B /* MondoAPIOAuth.swift in Sources */,
+				7F1E7EF21C579FF4000B734B /* MondoAddress.swift in Sources */,
 				7F1E7ED21C518166000B734B /* MondoAPI.swift in Sources */,
 				7F1E7EE01C5442A4000B734B /* MondoAccount.swift in Sources */,
+				7F1E7EF01C579C3F000B734B /* MondoCategory.swift in Sources */,
+				7F1E7EEC1C576983000B734B /* MondoModel.swift in Sources */,
+				7F1E7EE71C557EF4000B734B /* MondoTransaction.swift in Sources */,
+				7F1E7EEE1C576C4A000B734B /* MondoAttachment.swift in Sources */,
+				7F1E7EEA1C576911000B734B /* MondoMerchant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
