@@ -24,12 +24,12 @@ extension MondoAddress : SwiftyJSONDecodable {
     
     public init(json: JSON) throws {
         
-        address = try json.requiredValueForKey("address")
-        city = try json.requiredValueForKey("city")
-        country = try json.requiredValueForKey("country")
-        latitude = try json.requiredValueForKey("latitude")
-        longitude = try json.requiredValueForKey("longitude")
-        postcode = try json.requiredValueForKey("postcode")
-        region = try json.requiredValueForKey("region")
+        address = try json.decodeValueForKey("address")
+        city = try json.decodeValueForKey("city")
+        country = try json.decodeValueForKey("country")
+        latitude = try json.decodeValueForKey("latitude")
+        longitude = try json.decodeValueForKey("longitude")
+        postcode = try json.decodeValueForKey("postcode")
+        region = try json.decodeValueForKey("region")
     }
 }

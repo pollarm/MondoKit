@@ -39,7 +39,7 @@ extension IdExpandable : SwiftyJSONDecodable {
     public init(json: JSON) throws {
         if let id = json.string { self = .Id(id) }
         else {
-            self = .Expanded(try json.requiredAsValue() as Value)
+            self = .Expanded(try json.decodeAsValue() as Value)
         }
     }
 }

@@ -21,10 +21,10 @@ extension MondoAttachment : SwiftyJSONDecodable {
     
     public init(json: JSON) throws {
         
-        id = try json.requiredValueForKey("id")
-        created = try json.requiredValueForKey("created") as JSONDate
-        type = try json.requiredValueForKey("type")
-        url = try json.requiredValueForKey("url") as JSONURL
+        id = try json.decodeValueForKey("id")
+        created = try json.decodeValueForKey("created") as JSONDate
+        type = try json.decodeValueForKey("type")
+        url = try json.decodeValueForKey("url") as JSONURL
     }
 }
 

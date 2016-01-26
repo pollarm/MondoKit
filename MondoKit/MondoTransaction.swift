@@ -11,11 +11,19 @@ import SwiftyJSON
 
 public struct MondoTransaction {
 
+    public enum DeclineReason : String, SwiftyJSONDecodable {
+        case InsufficientFunds = "INSUFFICIENT_FUNDS"
+        case CardInactive = "CARD_INACTIVE"
+        case CardBlocked = "CARD_BLOCKED"
+        case Other = "OTHER"
+    }
+    
     public let transactionId : String
     public let accountBalance : Int
     public let currency : String
     public let amount : Int
     public let description : String
+    public let declineReason : DeclineReason?
     public let category : MondoCategory
     public let created : NSDate
     public let isLoad : Bool
@@ -34,29 +42,30 @@ extension MondoTransaction : SwiftyJSONDecodable {
     
     public init(json: JSON) throws {
         
-        transactionId = try json.requiredValueForKey("id")
-        accountBalance = try json.requiredValueForKey("account_balance")
-        currency = try json.requiredValueForKey("currency")
-        amount = try json.requiredValueForKey("amount")
-        description = try json.requiredValueForKey("description")
-        category = try json.requiredValueForKey("category")
+        transactionId = try json.decodeValueForKey("id")
+        accountBalance = try json.decodeValueForKey("account_balance")
+        currency = try json.decodeValueForKey("currency")
+        amount = try json.decodeValueForKey("amount")
+        description = try json.decodeValueForKey("description")
+        declineReason = try? json.decodeValueForKey("decline_reason")
+        category = try json.decodeValueForKey("category")
         
-        created = try json.requiredValueForKey("created") as JSONDate
+        created = try json.decodeValueForKey("created") as JSONDate
         
-        isLoad = try json.requiredValueForKey("is_load")
+        isLoad = try json.decodeValueForKey("is_load")
         
-        localCurrency = try json.requiredValueForKey("local_currency")
-        localAmount = try json.requiredValueForKey("local_amount")
+        localCurrency = try json.decodeValueForKey("local_currency")
+        localAmount = try json.decodeValueForKey("local_amount")
         
-        merchant = try? json.requiredValueForKey("merchant")
+        merchant = try? json.decodeValueForKey("merchant")
         
-        settled = try? json.requiredValueForKey("settled") as JSONDate
+        settled = try? json.decodeValueForKey("settled") as JSONDate
         
-        notes = try json.requiredValueForKey("notes")
+        notes = try json.decodeValueForKey("notes")
         
-        attachments = try json.requiredArrayForKey("attachments")
+        attachments = try json.decodeArrayForKey("attachments")
 
-        metaData = try json.requiredAsDictionaryForKey("metadata")
+        metaData = try json.decodeAsDictionaryForKey("metadata")
 
     }
 }

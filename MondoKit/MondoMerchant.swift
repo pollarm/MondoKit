@@ -25,14 +25,14 @@ extension MondoMerchant : SwiftyJSONDecodable {
     
     public init(json: JSON) throws {
         
-        id = try json.requiredValueForKey("id") as String
-        address = try json.requiredValueForKey("address")
-        created = try json.requiredValueForKey("created") as JSONDate
-        groupId = try json.requiredValueForKey("group_id")
-        logoUrl = try json.requiredValueForKey("logo") as JSONURL
-        emoji = try json.requiredValueForKey("emoji")
-        name = try json.requiredValueForKey("name")
-        category = try json.requiredValueForKey("category")
+        id = try json.decodeValueForKey("id") as String
+        address = try json.decodeValueForKey("address")
+        created = try json.decodeValueForKey("created") as JSONDate
+        groupId = try json.decodeValueForKey("group_id")
+        logoUrl = try json.decodeValueForKey("logo") as JSONURL
+        emoji = try json.decodeValueForKey("emoji")
+        name = try json.decodeValueForKey("name")
+        category = try json.decodeValueForKey("category")
     }
     
 }

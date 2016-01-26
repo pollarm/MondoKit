@@ -40,15 +40,7 @@ class AccountDetailsViewController: UIViewController {
             
                 self?.balance = balance
             }
-            /*
-            MondoAPI.instance.listTransactionsForAccount(account) { [weak self] (transactions, error) in
-                
-                if let transactions = transactions {
-                    for tx in transactions {
-                        debugPrint(tx)
-                    }
-                }
-            }*/
+
         }
     }
 

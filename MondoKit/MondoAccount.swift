@@ -29,12 +29,12 @@ extension MondoAccount : SwiftyJSONDecodable {
     
     public init(json: JSON) throws {
         
-        accountNumber = try json.requiredValueForKey("account_number")
+        accountNumber = try json.decodeValueForKey("account_number")
         
-        created = try json.requiredValueForKey("created") as JSONDate
-        description = try json.requiredValueForKey("description")
-        accountId = try json.requiredValueForKey("id")
-        sortCode = try json.requiredValueForKey("sort_code")
+        created = try json.decodeValueForKey("created") as JSONDate
+        description = try json.decodeValueForKey("description")
+        accountId = try json.decodeValueForKey("id")
+        sortCode = try json.decodeValueForKey("sort_code")
     }
 }
 
@@ -42,8 +42,8 @@ extension MondoAccountBalance : SwiftyJSONDecodable {
     
     public init(json: JSON) throws {
         
-        balance = try json.requiredValueForKey("balance")
-        currency = try json.requiredValueForKey("currency")
-        spendToday = try json.requiredValueForKey("spend_today")
+        balance = try json.decodeValueForKey("balance")
+        currency = try json.decodeValueForKey("currency")
+        spendToday = try json.decodeValueForKey("spend_today")
     }
 }

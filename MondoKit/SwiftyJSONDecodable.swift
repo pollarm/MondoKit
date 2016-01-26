@@ -75,7 +75,7 @@ extension Bool : SwiftyJSONDecodable {
 
 extension JSON {
     
-    func requiredAsArray<T: SwiftyJSONDecodable>(onDecodeElement onDecodeElement:((elementWasDecoded: T, fromJSON: JSON) throws ->())? = nil) throws -> Array<T> {
+    func decodeAsArray<T: SwiftyJSONDecodable>(onDecodeElement onDecodeElement:((elementWasDecoded: T, fromJSON: JSON) throws ->())? = nil) throws -> Array<T> {
     
         guard self != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
         
@@ -94,36 +94,40 @@ extension JSON {
         return elements
     }
     
-    func requiredArrayForKey<T: SwiftyJSONDecodable>(key: String, onDecodeElement:((elementWasDecoded: T, fromJSON: JSON) throws ->())? = nil) throws -> Array<T> {
+    func decodeArrayForKey<T: SwiftyJSONDecodable>(key: String, onDecodeElement:((elementWasDecoded: T, fromJSON: JSON) throws ->())? = nil) throws -> Array<T> {
+        
+        guard let _ = self.dictionary else { throw SwiftyJSONDecodeError.WrongType }
         
         do {
             let json = self[key]
-            return try json.requiredAsArray(onDecodeElement: onDecodeElement)
+            return try json.decodeAsArray(onDecodeElement: onDecodeElement)
         }
         catch let error as SwiftyJSONDecodeError {
             throw SwiftyJSONDecodeError.ErrorForKey(key: key, error: error)
         }
     }
     
-    func requiredValueForKey<T: SwiftyJSONDecodable>(key: String) throws -> T {
+    func decodeValueForKey<T: SwiftyJSONDecodable>(key: String) throws -> T {
+        
+        guard let _ = self.dictionary else { throw SwiftyJSONDecodeError.WrongType }
         
         do {
             let json = self[key]
-            return try json.requiredAsValue()
+            return try json.decodeAsValue()
         }
         catch let error as SwiftyJSONDecodeError {
             throw SwiftyJSONDecodeError.ErrorForKey(key: key, error: error)
         }
     }
     
-    func requiredAsValue<T: SwiftyJSONDecodable>() throws -> T {
+    func decodeAsValue<T: SwiftyJSONDecodable>() throws -> T {
         
         guard self != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
         
         return try T(json: self)
     }
 
-    func requiredAsDictionary<V: SwiftyJSONDecodable>(onDecodeElement onDecodeElement:((elementWasDecoded: V, fromJSON: JSON) throws ->())? = nil) throws -> Dictionary<String, V> {
+    func decodeAsDictionary<V: SwiftyJSONDecodable>(onDecodeElement onDecodeElement:((elementWasDecoded: V, fromJSON: JSON) throws ->())? = nil) throws -> Dictionary<String, V> {
         
         guard self != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
         
@@ -131,18 +135,18 @@ extension JSON {
         
         var result = [String:V]()
         for (k, j) in dictJSON {
-            let v : V = try j.requiredAsValue()
+            let v : V = try j.decodeAsValue()
             result[k] = v
         }
         
         return result
     }
     
-    func requiredAsDictionaryForKey<V: SwiftyJSONDecodable>(key: String, onDecodeElement:((elementWasDecoded: V, fromJSON: JSON) throws ->())? = nil) throws -> Dictionary<String, V> {
+    func decodeAsDictionaryForKey<V: SwiftyJSONDecodable>(key: String, onDecodeElement:((elementWasDecoded: V, fromJSON: JSON) throws ->())? = nil) throws -> Dictionary<String, V> {
         
         do {
             let json = self[key]
-            return try json.requiredAsDictionary(onDecodeElement: onDecodeElement)
+            return try json.decodeAsDictionary(onDecodeElement: onDecodeElement)
         }
         catch let error as SwiftyJSONDecodeError {
             throw SwiftyJSONDecodeError.ErrorForKey(key: key, error: error)
@@ -163,6 +167,13 @@ extension SwiftyJSONDecodable where Self : RawRepresentable, Self.RawValue : Swi
         }
     }
     
+}
+
+extension NSDate {
+    
+    var toJsonDateTime : String {
+        return JSONDate.dateFormatterNoMillis.stringFromDate(self)
+    }
 }
 
 final class JSONDate : NSDate, SwiftyJSONDecodable {
@@ -219,7 +230,7 @@ final class JSONDate : NSDate, SwiftyJSONDecodable {
 final class JSONURL : NSURL, SwiftyJSONDecodable {
     
     convenience init(json: JSON) throws {
-        let urlString : String = try json.requiredAsValue()
+        let urlString : String = try json.decodeAsValue()
         if let _ = NSURL(string: urlString) {
             self.init(string: urlString, relativeToURL: nil)!
         }

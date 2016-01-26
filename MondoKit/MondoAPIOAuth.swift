@@ -10,19 +10,19 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-public protocol ErrorWithLocalizedFailureReason {
+public protocol ErrorWithLocalizedDescription {
     
-    func getLocalizedFailureReason() -> String?
+    func getLocalizedDescription() -> String?
 }
 
-public enum LoginError : ErrorType, ErrorWithLocalizedFailureReason {
+public enum LoginError : ErrorType, ErrorWithLocalizedDescription {
     
     case RequestFailed(String)
     case CouldNotAuthenticate(String)
     case Other(String)
     case Unknown
     
-    public func getLocalizedFailureReason() -> String? {
+    public func getLocalizedDescription() -> String? {
         
         switch self {
         case .RequestFailed(let s): return s
@@ -101,7 +101,10 @@ extension OAuthViewController : UIWebViewDelegate {
         }
         
         return true
-
+    }
+    
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
+        onCompletion(success: false, error: error)
     }
 }
 

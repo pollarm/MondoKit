@@ -26,22 +26,31 @@ extension LoginController {
                     self.performSegueWithIdentifier("loginSuccess", sender: self)
                 }
             }
-            else if let errorWithReason = error as? ErrorWithLocalizedFailureReason {
-                debugPrint(errorWithReason.getLocalizedFailureReason())
+            else {
+                
+                var errorDescription = "An error occurred."
+                if let errorWithReason = error as? ErrorWithLocalizedDescription,
+                    localizedErrorDescription = errorWithReason.getLocalizedDescription() {
+                    errorDescription = localizedErrorDescription
+                }
+                self.dismissViewControllerAnimated(true) {
+                    
+                    let alert = UIAlertController(title: nil, message: errorDescription, preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
             }
-            else  {
-                debugPrint(error)
-            }
+
         }
 
         presentViewController(oauthViewController, animated: true, completion: nil)
     }
 }
 
-extension NSError : ErrorWithLocalizedFailureReason {
+extension NSError : ErrorWithLocalizedDescription {
     
-    public func getLocalizedFailureReason() -> String? {
+    public func getLocalizedDescription() -> String? {
         
-        return localizedFailureReason
+        return self.localizedDescription
     }
 }
