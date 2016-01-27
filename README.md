@@ -106,3 +106,9 @@ eg. using Optional `pagination` parameter
 ```swift
 MondoAPI.instance.listTransactionsForAccount(account, pagination: MondoAPI.Pagination(limit: 50, since: .Date(NSDate()), before: NSDate())) { (transactions, error) in ... }
 ```
+
+### getTransactionForId
+
+```swift
+MondoAPI.instance.getTransactionForId(id, expand: "merchant") { (transaction, error) in ... }
+```
