@@ -52,9 +52,16 @@ class AccountDetailsViewController: UIViewController {
     }
 }
 
+class TransactionCell : UITableViewCell {
+    
+    @IBOutlet private var descriptionLabel : UILabel!
+    @IBOutlet private var categoryLabel : UILabel!
+    @IBOutlet private var amountLabel : UILabel!
+}
+
 class AccountTransactionsViewController : UIViewController {
     
-    private static let TransactionCellIdentifier = "TransactionCell"
+    private static let TransactionCellIdentifier = "TransactionCell2"
     
     @IBOutlet private var tableView : UITableView!
     
@@ -71,7 +78,7 @@ class AccountTransactionsViewController : UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        MondoAPI.instance.listTransactionsForAccount(account) { [weak self] (transactions, error) in
+        MondoAPI.instance.listTransactionsForAccount(account, expand: "merchant") { [weak self] (transactions, error) in
             
             if let transactions = transactions {
                 self?.transactions = transactions
@@ -93,13 +100,30 @@ extension AccountTransactionsViewController : UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(AccountTransactionsViewController.TransactionCellIdentifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier(AccountTransactionsViewController.TransactionCellIdentifier, forIndexPath: indexPath) as! TransactionCell
         
         if let transaction = transactions?[indexPath.row] {
         
-            cell.textLabel?.text = transaction.description
-            cell.detailTextLabel?.text = String(transaction.amount)
+            
+            if let m = transaction.merchant, case .Expanded(let merchant) = m {
+                cell.descriptionLabel.text = merchant.name
+            }
+            else {
+                cell.descriptionLabel.text = transaction.description
+            }
+            cell.categoryLabel.text = transaction.category.rawValue
+            cell.amountLabel.text = String(transaction.amount)
         }
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if let transaction = transactions?[indexPath.row] {
+            MondoAPI.instance.getTransactionForId(transaction.transactionId) { (transaction, error) in
+                
+                debugPrint(transaction)
+            }
+        }
     }
 }

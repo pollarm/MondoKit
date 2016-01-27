@@ -327,6 +327,70 @@ extension MondoAPI {
     }
 }
 
+// MARK: getTransactionForId
+
+extension MondoAPI {
+    
+    /**
+     Calls https://api.getmondo.co.uk/transaction/$transaction_id and calls the completion closure with
+     either an `MondoTransaction` or an `ErrorType`
+     
+     - parameter transactionId: a transaction Id
+     - parameter expand:        what to pass as expand[] parameter. eg. merchant. `nil` by default.
+     - parameter completion:
+     */
+    public func getTransactionForId(transactionId: String, expand: String? = nil, completion: (transaction: MondoTransaction?, error: ErrorType?) -> Void) {
+        
+        assert(initialised, "MondoAPI.instance not initialised!")
+        
+        if let authData = authData {
+            
+            var parameters = [String:String]()
+            if let expand = expand {
+                parameters["expand[]"] = expand
+            }
+            
+            Alamofire.request(.GET, MondoAPI.APIRoot+"transactions/"+transactionId, parameters: parameters, headers: ["Authorization":"Bearer " + authData.accessToken]).responseJSON { response in
+                
+                var transaction : MondoTransaction?
+                var anyError : ErrorType?
+                
+                defer {
+                    self.dispatchCompletion() {
+                        completion(transaction: transaction, error: anyError)
+                    }
+                }
+                
+                guard let status = response.response?.statusCode where status == 200 else {
+                    
+                    debugPrint(response)
+                    anyError = self.errorFromResponse(response)
+                    return
+                }
+                
+                switch response.result {
+                    
+                case .Success(let value):
+                    debugPrint(value)
+                    
+                    let json = JSON(value)
+                    do {
+                        transaction = try json.decodeValueForKey("transaction") as MondoTransaction
+                    }
+                    catch {
+                        debugPrint("Could not create MondoTransaction from \(json) \n Error: \(error)")
+                        anyError = error
+                    }
+                    
+                case .Failure(let error):
+                    debugPrint(error)
+                    anyError = error
+                }
+            }
+        }
+    }
+}
+
 // MARK: listTransactionsForAccount
 
 extension MondoAPI {
