@@ -9,12 +9,12 @@
 import Foundation
 import SwiftyJSON
 
-public struct MondoAccount {
+public struct MondoAccount : Idable {
     
     public let accountNumber : String
     public let created : NSDate
     public let description : String
-    public let accountId : String
+    public let id : String
     public let sortCode : String
 }
 
@@ -33,7 +33,7 @@ extension MondoAccount : SwiftyJSONDecodable {
         
         created = try json.decodeValueForKey("created") as JSONDate
         description = try json.decodeValueForKey("description")
-        accountId = try json.decodeValueForKey("id")
+        id = try json.decodeValueForKey("id")
         sortCode = try json.decodeValueForKey("sort_code")
     }
 }

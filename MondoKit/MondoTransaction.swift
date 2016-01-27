@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-public struct MondoTransaction {
+public struct MondoTransaction : Idable {
 
     public enum DeclineReason : String, SwiftyJSONDecodable {
         case InsufficientFunds = "INSUFFICIENT_FUNDS"
@@ -18,7 +18,7 @@ public struct MondoTransaction {
         case Other = "OTHER"
     }
     
-    public let transactionId : String
+    public let id : String
     public let accountBalance : Int
     public let currency : String
     public let amount : Int
@@ -42,7 +42,7 @@ extension MondoTransaction : SwiftyJSONDecodable {
     
     public init(json: JSON) throws {
         
-        transactionId = try json.decodeValueForKey("id")
+        id = try json.decodeValueForKey("id")
         accountBalance = try json.decodeValueForKey("account_balance")
         currency = try json.decodeValueForKey("currency")
         amount = try json.decodeValueForKey("amount")

@@ -287,7 +287,7 @@ extension MondoAPI {
         
         if let authData = authData {
             
-            Alamofire.request(.GET, MondoAPI.APIRoot+"balance", parameters: ["account_id" : account.accountId], headers: ["Authorization":"Bearer " + authData.accessToken]).responseJSON { response in
+            Alamofire.request(.GET, MondoAPI.APIRoot+"balance", parameters: ["account_id" : account.id], headers: ["Authorization":"Bearer " + authData.accessToken]).responseJSON { response in
                 
                 var balance : MondoAccountBalance?
                 var anyError : ErrorType?
@@ -410,7 +410,7 @@ extension MondoAPI {
         
         if let authData = authData {
             
-            var parameters = ["account_id" : account.accountId]
+            var parameters = ["account_id" : account.id]
             if let expand = expand {
                 parameters["expand[]"] = expand
             }

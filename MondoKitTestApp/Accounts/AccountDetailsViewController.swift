@@ -120,7 +120,7 @@ extension AccountTransactionsViewController : UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if let transaction = transactions?[indexPath.row] {
-            MondoAPI.instance.getTransactionForId(transaction.transactionId) { (transaction, error) in
+            MondoAPI.instance.getTransactionForId(transaction.id) { (transaction, error) in
                 
                 debugPrint(transaction)
             }
