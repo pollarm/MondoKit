@@ -9,17 +9,53 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-
+import KeychainAccess
 
 internal struct AuthData {
     
-    let createdAt = NSDate()
-    let userId : String
+    private static let OAuth2CreatedAtKey: String = "MondoOAuth2CreatedAt"
+    private static let OAuth2AccessTokenKey: String = "MondoOAuth2AccessToken"
+    //private let OAuth2RefreshTokenKey: String = "MondoOAuth2RefreshToken"
+    private static let OAuth2ExpiresInKey: String = "MondoOAuth2ExpiresInToken"
+    
+    let createdAt : NSDate
+    //let userId : String
     let accessToken : String
     let expiresIn : Int
     let refreshToken : String?
     var expiresAt : NSDate {
         return createdAt.dateByAddingTimeInterval(NSTimeInterval(expiresIn))
+    }
+    
+    internal init(createdAt: NSDate, accessToken: String, expiresIn: Int, refreshToken: String? = nil) {
+        self.createdAt = createdAt
+        self.accessToken = accessToken
+        self.expiresIn = expiresIn
+        self.refreshToken = refreshToken
+    }
+    
+    private init?(keychain: Keychain) {
+        
+        guard
+        let createdAt = keychain[AuthData.OAuth2CreatedAtKey],
+        let createdAtDate = JSONDate.dateFormatterNoMillis.dateFromString(createdAt),
+        let accessToken = keychain[AuthData.OAuth2AccessTokenKey],
+        let expiresIn = keychain[AuthData.OAuth2ExpiresInKey]
+            else {
+                return nil
+        }
+        
+        self.createdAt = createdAtDate
+        self.accessToken = accessToken
+        self.expiresIn = Int(expiresIn)!
+        self.refreshToken = nil
+    }
+    
+    internal func storeInKeychain(keychain: Keychain) {
+        
+        keychain[AuthData.OAuth2CreatedAtKey] = createdAt.toJsonDateTime
+        keychain[AuthData.OAuth2AccessTokenKey] = accessToken
+        keychain[AuthData.OAuth2ExpiresInKey] = String(expiresIn)
     }
 }
 
@@ -49,6 +85,7 @@ public class MondoAPI {
     internal var clientSecret : String?
     
     internal var authData : AuthData?
+    internal var keychain : Keychain!
     
     private var initialised : Bool {
         
@@ -56,6 +93,15 @@ public class MondoAPI {
     }
     
     private init() { }
+    
+    public var isAuthorized : Bool {
+        
+        assert(initialised, "MondoAPI.instance not initialised!")
+        
+        guard let authData = authData else { return false }
+        
+        return authData.expiresAt.timeIntervalSinceNow > 60 // Return false if we're expired or about to expire in the next minute
+    }
     
     /**
      Initializes the MondoAPI instance with the specified clientId & clientSecret.
@@ -71,6 +117,9 @@ public class MondoAPI {
         
         self.clientId = clientId
         self.clientSecret = clientSecret
+        
+        keychain = Keychain(service: MondoAPI.APIRoot + clientId)
+        authData = AuthData(keychain: keychain)
     }
     
     /**

@@ -148,8 +148,8 @@ extension MondoAPI {
                     expiresIn = json["expires_in"].int {
                         
                         let refreshToken = value["refresh_token"] as? String
-                        self.authData = AuthData(userId: userId, accessToken: accessToken, expiresIn: expiresIn, refreshToken: refreshToken)
-                        
+                        self.authData = AuthData(createdAt: NSDate(), accessToken: accessToken, expiresIn: expiresIn, refreshToken: refreshToken)
+                        self.authData?.storeInKeychain(self.keychain)
                         success = true
                 }
                 else if let code = value["code"] as? String, message = value["message"] as? String {

@@ -18,32 +18,37 @@ extension LoginController {
     
     @IBAction func loginPressed(sender : UIButton) {
         
-        let oauthViewController = MondoAPI.instance.newAuthViewController() { (success, error) in
-            
-            if success {
-                
-                self.dismissViewControllerAnimated(true) {
-                    self.performSegueWithIdentifier("loginSuccess", sender: self)
-                }
-            }
-            else {
-                
-                var errorDescription = "An error occurred."
-                if let errorWithReason = error as? ErrorWithLocalizedDescription,
-                    localizedErrorDescription = errorWithReason.getLocalizedDescription() {
-                    errorDescription = localizedErrorDescription
-                }
-                self.dismissViewControllerAnimated(true) {
-                    
-                    let alert = UIAlertController(title: nil, message: errorDescription, preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            }
-
+        if MondoAPI.instance.isAuthorized {
+            self.performSegueWithIdentifier("loginSuccess", sender: self)
         }
-
-        presentViewController(oauthViewController, animated: true, completion: nil)
+        else {
+            let oauthViewController = MondoAPI.instance.newAuthViewController() { (success, error) in
+                
+                if success {
+                    
+                    self.dismissViewControllerAnimated(true) {
+                        self.performSegueWithIdentifier("loginSuccess", sender: self)
+                    }
+                }
+                else {
+                    
+                    var errorDescription = "An error occurred."
+                    if let errorWithReason = error as? ErrorWithLocalizedDescription,
+                        localizedErrorDescription = errorWithReason.getLocalizedDescription() {
+                            errorDescription = localizedErrorDescription
+                    }
+                    self.dismissViewControllerAnimated(true) {
+                        
+                        let alert = UIAlertController(title: nil, message: errorDescription, preferredStyle: .Alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                }
+                
+            }
+            
+            presentViewController(oauthViewController, animated: true, completion: nil)
+        }
     }
 }
 
