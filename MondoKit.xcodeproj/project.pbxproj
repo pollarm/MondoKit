@@ -35,6 +35,7 @@
 		7F1E7EF01C579C3F000B734B /* MondoCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EEF1C579C3F000B734B /* MondoCategory.swift */; };
 		7F1E7EF21C579FF4000B734B /* MondoAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EF11C579FF4000B734B /* MondoAddress.swift */; };
 		7FC712EB1C58BB7F00FE6A40 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC712EA1C58BB7F00FE6A40 /* KeychainAccess.framework */; };
+		7FC713341C59541700FE6A40 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 7FC713331C59541700FE6A40 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		7F1E7EEF1C579C3F000B734B /* MondoCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoCategory.swift; sourceTree = "<group>"; };
 		7F1E7EF11C579FF4000B734B /* MondoAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoAddress.swift; sourceTree = "<group>"; };
 		7FC712EA1C58BB7F00FE6A40 /* KeychainAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeychainAccess.framework; path = Carthage/Checkouts/KeychainAccess/Lib/build/Debug/KeychainAccess.framework; sourceTree = "<group>"; };
+		7FC713331C59541700FE6A40 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 		7F1E7E771C516FF5000B734B = {
 			isa = PBXGroup;
 			children = (
+				7FC713331C59541700FE6A40 /* README.md */,
 				7FC712EA1C58BB7F00FE6A40 /* KeychainAccess.framework */,
 				7F1E7EDB1C543BA9000B734B /* SwiftyJSON.framework */,
 				7F1E7EB31C51780C000B734B /* Alamofire.framework */,
@@ -365,6 +368,7 @@
 				7F1E7EEC1C576983000B734B /* MondoModel.swift in Sources */,
 				7F1E7EE71C557EF4000B734B /* MondoTransaction.swift in Sources */,
 				7F1E7EEE1C576C4A000B734B /* MondoAttachment.swift in Sources */,
+				7FC713341C59541700FE6A40 /* README.md in Sources */,
 				7F1E7EEA1C576911000B734B /* MondoMerchant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,7 +526,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Checkouts/KeychainAccess/Lib/build/Debug";
 				INFOPLIST_FILE = MondoKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -541,7 +544,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Checkouts/KeychainAccess/Lib/build/Debug";
 				INFOPLIST_FILE = MondoKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
