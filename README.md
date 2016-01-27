@@ -28,40 +28,81 @@ Run `carthage update --platform iOS --no-use-binaries` to build the framework an
 
 ### Initialization
 
+Initialising the MondAPI is achieved as follows and should be done before you do anything else with the MondoAPI class, so probably in `applicationDidFinishLaunchingWithOptions`.
 
-I suggest storing your Mondo clientId and clientSecret in a property list file called MondoKeys.plist and .gitignore the file.
+```swift
+MondoAPI.instance.initialiseWithClientId(mondoClientId, clientSecret : mondoClientSecret)
+```
+
+One option is to store your Mondo clientId and clientSecret in a property list file called MondoKeys.plist (don't forget to .gitignore this file).
 You can then initialise the MondoAPI as follows:
 
 ```swift
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+guard let mondoKeysPath = NSBundle.mainBundle().pathForResource("MondoKeys", ofType: "plist"),
+    mondoKeys = NSDictionary(contentsOfFile: mondoKeysPath),
+    mondoClientId = mondoKeys["clientId"] as? String,
+    mondoClientSecret = mondoKeys["clientSecret"] as? String else {
 
-    // Initialise MondoAPI with oauth2 id, secret
+        assertionFailure("MondoKeys.plist containing 'clientId' and 'clientSecret' required but not found in main bundle")
+        return false
+    }
 
-    guard let mondoKeysPath = NSBundle.mainBundle().pathForResource("MondoKeys", ofType: "plist"),
-        mondoKeys = NSDictionary(contentsOfFile: mondoKeysPath),
-        mondoClientId = mondoKeys["clientId"] as? String,
-        mondoClientSecret = mondoKeys["clientSecret"] as? String else {
+MondoAPI.instance.initialiseWithClientId(mondoClientId, clientSecret : mondoClientSecret)
+```
 
-            assertionFailure("MondoKeys.plist containing 'clientId' and 'clientSecret' required but not found in main bundle")
-            return false
+### Authentication
+
+MondoAPI provides a ViewController implemetation to manage 3-legged authorization with the API. It also stores authorization details (accessToken, expiresIn etc.) securely in the KeyChain in the event of a successful authorization so you don't need to login every time you run your app.
+
+To check if MondAPI is already authorized for a user:
+
+```swift
+if MondoAPI.instance.isAuthorized { ... proceed ... }
+```
+
+If not then request an auth ViewController specifiying the callback closure to deal with the result and present it:
+
+```swift
+else {
+    let oauthViewController = MondoAPI.instance.newAuthViewController() { (success, error) in
+        if success {
+            self.dismissViewControllerAnimated(true) {
+            // proceed now we're logged in
         }
-
-    MondoAPI.instance.initialiseWithClientId(mondoClientId, clientSecret : mondoClientSecret)
-
-    return true
+        else {
+            // present error to user
+        }
+    }
+    presentViewController(oauthViewController, animated: true, completion: nil)
 }
 ```
 
-Then to allow the user to sign in request an auth view controller:
-
-```swift
-let oauthViewController = MondoAPI.instance.newAuthViewController() { (success, error) in ... }
-```
-
-Present that as you see fit and await the callback to confirm the result.
-
-You can then use the MondAPI singleton to retrive account and transaction information. eg.
+### listAccounts
 
 ```swift
 MondoAPI.instance.listAccounts() { (accounts, error) in ... }
+```
+
+### getBalanceForAccount
+
+```swift
+MondoAPI.instance.getBalanceForAccount(account) { (balance, error) in ... }
+```
+
+### listTransactions
+
+```swift
+MondoAPI.instance.listTransactionsForAccount(account) { (transactions, error) in ... }
+```
+
+eg. using Optional `expand` parameter
+
+```swift
+MondoAPI.instance.listTransactionsForAccount(account, expand: "merchant") { (transactions, error) in ... }
+```
+
+eg. using Optional `pagination` parameter
+
+```swift
+MondoAPI.instance.listTransactionsForAccount(account, pagination: MondoAPI.Pagination(limit: 50, since: .Date(NSDate()), before: NSDate())) { (transactions, error) in ... }
 ```
