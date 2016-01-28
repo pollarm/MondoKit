@@ -10,12 +10,20 @@
 import Foundation
 import SwiftyJSON
 
+/// Conform to this if you can be instantiated from a json representation
+/// in the form of a SwiftyJSON.JSON
 public protocol SwiftyJSONDecodable {
     
+    /// An initialiser that take a JSON and throws
+    ///
+    /// The intention here is that the implementation can `throw` if the json
+    /// is malformatted, missing required fields etc.
     init(json: JSON) throws
     
 }
 
+/// An ErrorType encapsulating the various different failure states
+/// while decoding from json
 indirect enum SwiftyJSONDecodeError : ErrorType {
     
     case NullValue
@@ -73,34 +81,65 @@ extension Bool : SwiftyJSONDecodable {
     }
 }
 
+
+extension Array where Element: SwiftyJSONDecodable {
+
+    public init(json: JSON) throws {
+        
+        guard json != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
+        
+        guard let arrayJSON = json.array else { throw SwiftyJSONDecodeError.WrongType }
+        
+        var index = 0
+        var elements = [Element]()
+        do {
+            for elementJson in arrayJSON {
+                let element = try Element(json: elementJson)
+                elements.append(element)
+                index = index + 1
+            }
+        }
+        catch let error as SwiftyJSONDecodeError {
+            throw SwiftyJSONDecodeError.ErrorForKey(key: "["+String(index)+"]", error: error)
+        }
+        
+        self.init(elements)
+    }
+}
+
+extension Dictionary where Key : StringLiteralConvertible, Key.StringLiteralType == String, Value: SwiftyJSONDecodable {
+    
+    public init(json: JSON) throws {
+        
+        guard json != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
+        
+        guard let dictJSON = json.dictionary else { throw SwiftyJSONDecodeError.WrongType }
+        
+        var result = [String:Value]()
+        for (k, j) in dictJSON {
+            let v : Value = try Value(json: j)
+            result[k] = v
+        }
+        
+        self.init()
+        for (k, v) in result {
+            let key = Key(stringLiteral: k)
+            self[key] = v
+        }
+    }
+}
+
 extension JSON {
     
-    func decodeAsArray<T: SwiftyJSONDecodable>(onDecodeElement onDecodeElement:((elementWasDecoded: T, fromJSON: JSON) throws ->())? = nil) throws -> Array<T> {
     
-        guard self != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
+    func decodeArrayForKey<T: SwiftyJSONDecodable>(key: String) throws -> Array<T> {
         
-        guard let arrayJSON = self.array else { throw SwiftyJSONDecodeError.WrongType }
-        
-        var elements = [T]()
-        for elementJson in arrayJSON {
-            let element = try T(json: elementJson)
-            elements.append(element)
-        }
-        
-        for (element,elementJson) in zip(elements, arrayJSON) {
-            try onDecodeElement?(elementWasDecoded: element, fromJSON: elementJson)
-        }
-        
-        return elements
-    }
-    
-    func decodeArrayForKey<T: SwiftyJSONDecodable>(key: String, onDecodeElement:((elementWasDecoded: T, fromJSON: JSON) throws ->())? = nil) throws -> Array<T> {
-        
-        guard let _ = self.dictionary else { throw SwiftyJSONDecodeError.WrongType }
+        guard self.type != .Null else { throw SwiftyJSONDecodeError.NullValue }
+        guard self.type == .Dictionary else { throw SwiftyJSONDecodeError.WrongType }
         
         do {
             let json = self[key]
-            return try json.decodeAsArray(onDecodeElement: onDecodeElement)
+            return try Array<T>(json: json)
         }
         catch let error as SwiftyJSONDecodeError {
             throw SwiftyJSONDecodeError.ErrorForKey(key: key, error: error)
@@ -109,7 +148,8 @@ extension JSON {
     
     func decodeValueForKey<T: SwiftyJSONDecodable>(key: String) throws -> T {
         
-        guard let _ = self.dictionary else { throw SwiftyJSONDecodeError.WrongType }
+        guard self.type != .Null else { throw SwiftyJSONDecodeError.NullValue }
+        guard self.type == .Dictionary else { throw SwiftyJSONDecodeError.WrongType }
         
         do {
             let json = self[key]
@@ -126,27 +166,15 @@ extension JSON {
         
         return try T(json: self)
     }
-
-    func decodeAsDictionary<V: SwiftyJSONDecodable>(onDecodeElement onDecodeElement:((elementWasDecoded: V, fromJSON: JSON) throws ->())? = nil) throws -> Dictionary<String, V> {
-        
-        guard self != JSON.null else { throw SwiftyJSONDecodeError.NullValue }
-        
-        guard let dictJSON = self.dictionary else { throw SwiftyJSONDecodeError.WrongType }
-        
-        var result = [String:V]()
-        for (k, j) in dictJSON {
-            let v : V = try j.decodeAsValue()
-            result[k] = v
-        }
-        
-        return result
-    }
     
-    func decodeAsDictionaryForKey<V: SwiftyJSONDecodable>(key: String, onDecodeElement:((elementWasDecoded: V, fromJSON: JSON) throws ->())? = nil) throws -> Dictionary<String, V> {
+    func decodeAsDictionaryForKey<V: SwiftyJSONDecodable>(key: String) throws -> Dictionary<String, V> {
+        
+        guard self.type != .Null else { throw SwiftyJSONDecodeError.NullValue }
+        guard self.type == .Dictionary else { throw SwiftyJSONDecodeError.WrongType }
         
         do {
             let json = self[key]
-            return try json.decodeAsDictionary(onDecodeElement: onDecodeElement)
+            return try Dictionary<String, V>(json : json)
         }
         catch let error as SwiftyJSONDecodeError {
             throw SwiftyJSONDecodeError.ErrorForKey(key: key, error: error)
@@ -154,6 +182,7 @@ extension JSON {
     }
 }
 
+/// Make all RawRepresentables conform to SwiftyJSONDecodable where the associated RawValue is SwiftyJSONDecodable
 extension SwiftyJSONDecodable where Self : RawRepresentable, Self.RawValue : SwiftyJSONDecodable {
     
     public init(json: JSON) throws {

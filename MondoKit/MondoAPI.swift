@@ -444,7 +444,7 @@ extension MondoAPI {
                     
                     let json = JSON(value)
                     do {
-                        transactions = try json["transactions"].decodeAsArray()
+                        transactions = try json.decodeArrayForKey("transactions")
                     }
                     catch {
                         debugPrint("Could not create MondoTransactions from \(json) \n Error: \(error)")

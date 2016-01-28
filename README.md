@@ -54,7 +54,7 @@ MondoAPI.instance.initialiseWithClientId(mondoClientId, clientSecret : mondoClie
 
 MondoAPI provides a ViewController implemetation to manage 3-legged authorization with the API. It also stores authorization details (accessToken, expiresIn etc.) securely in the KeyChain in the event of a successful authorization so you don't need to login every time you run your app.
 
-To check if MondAPI is already authorized for a user:
+To check if MondoAPI is already authorized for a user:
 
 ```swift
 if MondoAPI.instance.isAuthorized { ... proceed ... }
