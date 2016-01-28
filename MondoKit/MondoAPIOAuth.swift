@@ -143,7 +143,7 @@ extension MondoAPI {
                 
                 let json = JSON(value)
                 
-                if let userId = json["user_id"].string,
+                if let _ = json["user_id"].string,
                     accessToken = json["access_token"].string,
                     expiresIn = json["expires_in"].int {
                         

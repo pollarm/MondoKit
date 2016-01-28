@@ -36,6 +36,7 @@
 		7F1E7EF21C579FF4000B734B /* MondoAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EF11C579FF4000B734B /* MondoAddress.swift */; };
 		7FC712EB1C58BB7F00FE6A40 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC712EA1C58BB7F00FE6A40 /* KeychainAccess.framework */; };
 		7FC713341C59541700FE6A40 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 7FC713331C59541700FE6A40 /* README.md */; };
+		7FC713371C5ABB1F00FE6A40 /* TransactionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC713361C5ABB1F00FE6A40 /* TransactionDetailController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		7F1E7EF11C579FF4000B734B /* MondoAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoAddress.swift; sourceTree = "<group>"; };
 		7FC712EA1C58BB7F00FE6A40 /* KeychainAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeychainAccess.framework; path = Carthage/Checkouts/KeychainAccess/Lib/build/Debug/KeychainAccess.framework; sourceTree = "<group>"; };
 		7FC713331C59541700FE6A40 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		7FC713361C5ABB1F00FE6A40 /* TransactionDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 		7F1E7EBC1C517F33000B734B /* MondoKitTestApp */ = {
 			isa = PBXGroup;
 			children = (
+				7FC713351C5ABAF700FE6A40 /* Transactions */,
 				7F1E7EE11C54DFA8000B734B /* Accounts */,
 				7F1E7ED61C518766000B734B /* Login */,
 				7F1E7ECF1C517FD4000B734B /* MondoKeys.plist */,
@@ -214,6 +217,14 @@
 				7F1E7EE61C557EF4000B734B /* MondoTransaction.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		7FC713351C5ABAF700FE6A40 /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				7FC713361C5ABB1F00FE6A40 /* TransactionDetailController.swift */,
+			);
+			path = Transactions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,6 +397,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F1E7EC21C517F33000B734B /* DetailViewController.swift in Sources */,
+				7FC713371C5ABB1F00FE6A40 /* TransactionDetailController.swift in Sources */,
 				7F1E7ED81C518797000B734B /* LoginController.swift in Sources */,
 				7F1E7EC01C517F33000B734B /* MasterViewController.swift in Sources */,
 				7F1E7EE31C54DFD4000B734B /* AccountsListViewController.swift in Sources */,

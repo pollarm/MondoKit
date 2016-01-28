@@ -33,7 +33,7 @@ public struct MondoTransaction : Idable {
     public let settled : NSDate?
     public let notes : String
     
-    public let attachments : [MondoAttachment]
+    public let attachments : [MondoAttachment]?
     
     public let metaData : [String:String]
 }
@@ -63,7 +63,7 @@ extension MondoTransaction : SwiftyJSONDecodable {
         
         notes = try json.decodeValueForKey("notes")
         
-        attachments = try json.decodeArrayForKey("attachments")
+        attachments = try? json.decodeArrayForKey("attachments")
 
         metaData = try json.decodeAsDictionaryForKey("metadata")
 

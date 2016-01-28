@@ -103,6 +103,11 @@ public class MondoAPI {
         return authData.expiresAt.timeIntervalSinceNow > 60 // Return false if we're expired or about to expire in the next minute
     }
     
+    private var authHeader : [String:String]? {
+        guard let authData = authData else { return nil }
+        return ["Authorization":"Bearer " + authData.accessToken]
+    }
+    
     /**
      Initializes the MondoAPI instance with the specified clientId & clientSecret.
      
@@ -220,9 +225,9 @@ extension MondoAPI {
         
         assert(initialised, "MondoAPI.instance not initialised!")
         
-        if let authData = authData {
+        if let authHeader = self.authHeader {
             
-            Alamofire.request(.GET, MondoAPI.APIRoot+"accounts", headers: ["Authorization":"Bearer " + authData.accessToken]).responseJSON { response in
+            Alamofire.request(.GET, MondoAPI.APIRoot+"accounts", headers: authHeader).responseJSON { response in
                 
                 var mondoAccounts : [MondoAccount]?
                 var anyError : ErrorType?
@@ -285,9 +290,9 @@ extension MondoAPI {
         
         assert(initialised, "MondoAPI.instance not initialised!")
         
-        if let authData = authData {
+        if let authHeader = self.authHeader {
             
-            Alamofire.request(.GET, MondoAPI.APIRoot+"balance", parameters: ["account_id" : account.id], headers: ["Authorization":"Bearer " + authData.accessToken]).responseJSON { response in
+            Alamofire.request(.GET, MondoAPI.APIRoot+"balance", parameters: ["account_id" : account.id], headers: authHeader).responseJSON { response in
                 
                 var balance : MondoAccountBalance?
                 var anyError : ErrorType?
@@ -343,14 +348,14 @@ extension MondoAPI {
         
         assert(initialised, "MondoAPI.instance not initialised!")
         
-        if let authData = authData {
+        if let authHeader = self.authHeader {
             
             var parameters = [String:String]()
             if let expand = expand {
                 parameters["expand[]"] = expand
             }
             
-            Alamofire.request(.GET, MondoAPI.APIRoot+"transactions/"+transactionId, parameters: parameters, headers: ["Authorization":"Bearer " + authData.accessToken]).responseJSON { response in
+            Alamofire.request(.GET, MondoAPI.APIRoot+"transactions/"+transactionId, parameters: parameters, headers: authHeader).responseJSON { response in
                 
                 var transaction : MondoTransaction?
                 var anyError : ErrorType?
@@ -391,6 +396,67 @@ extension MondoAPI {
     }
 }
 
+// MARK : annotateTransaction
+
+extension MondoAPI {
+    
+    public func annotateTransaction(transaction: MondoTransaction, withKey key: String, value: String, completion: (transaction: MondoTransaction?, error: ErrorType?) -> Void) {
+        
+        assert(initialised, "MondoAPI.instance not initialised!")
+        
+        guard key.characters.count > 0 else {
+            self.dispatchCompletion() {
+                completion(transaction: transaction, error: nil)
+            }
+            return
+        }
+        
+        if let authHeader = self.authHeader {
+            
+            var parameters = ["metadata["+key+"]":value]
+            
+            Alamofire.request(.PATCH, MondoAPI.APIRoot+"transactions/"+transaction.id, parameters: parameters, headers: authHeader).responseJSON { response in
+                
+                var transaction : MondoTransaction?
+                var anyError : ErrorType?
+                
+                defer {
+                    self.dispatchCompletion() {
+                        completion(transaction: transaction, error: anyError)
+                    }
+                }
+                
+                guard let status = response.response?.statusCode where status == 200 else {
+                    
+                    debugPrint(response)
+                    anyError = self.errorFromResponse(response)
+                    return
+                }
+                
+                switch response.result {
+                    
+                case .Success(let value):
+                    debugPrint(value)
+                    
+                    let json = JSON(value)
+                    do {
+                        transaction = try json.decodeValueForKey("transaction") as MondoTransaction
+                    }
+                    catch {
+                        debugPrint("Could not create MondoTransaction from \(json) \n Error: \(error)")
+                        anyError = error
+                    }
+                    
+                case .Failure(let error):
+                    debugPrint(error)
+                    anyError = error
+                }
+            }
+        }
+
+    }
+}
+
 // MARK: listTransactionsForAccount
 
 extension MondoAPI {
@@ -408,7 +474,7 @@ extension MondoAPI {
         
         assert(initialised, "MondoAPI.instance not initialised!")
         
-        if let authData = authData {
+        if let authHeader = self.authHeader {
             
             var parameters = ["account_id" : account.id]
             if let expand = expand {
@@ -419,7 +485,7 @@ extension MondoAPI {
                 pagination.parameters.forEach { parameters.updateValue($1, forKey: $0) }
             }
             
-            Alamofire.request(.GET, MondoAPI.APIRoot+"transactions", parameters: parameters, headers: ["Authorization":"Bearer " + authData.accessToken]).responseJSON { response in
+            Alamofire.request(.GET, MondoAPI.APIRoot+"transactions", parameters: parameters, headers: authHeader).responseJSON { response in
                 
                 var transactions : [MondoTransaction]?
                 var anyError : ErrorType?

@@ -13,6 +13,7 @@ class AccountDetailsViewController: UIViewController {
 
     @IBOutlet private var balanceLabel : UILabel!
     @IBOutlet private var spentLabel : UILabel!
+    private var transactionsController : AccountTransactionsViewController!
     
     var account : MondoAccount?
     
@@ -46,10 +47,20 @@ class AccountDetailsViewController: UIViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if let transactionController = segue.destinationViewController as? AccountTransactionsViewController {
-            transactionController.account = account
+        if let transactionsController = segue.destinationViewController as? AccountTransactionsViewController {
+            transactionsController.account = account
+            self.transactionsController = transactionsController
+            transactionsController.selectionHandler = { _ in
+                self.performSegueWithIdentifier("showDetails", sender: nil)
+            }
+        }
+        
+        if let detailsController = segue.destinationViewController as? TransactionDetailController,
+            transaction = transactionsController.selectedTransaction {
+                detailsController.transaction = transaction
         }
     }
+    
 }
 
 class TransactionCell : UITableViewCell {
@@ -66,6 +77,18 @@ class AccountTransactionsViewController : UIViewController {
     @IBOutlet private var tableView : UITableView!
     
     var account : MondoAccount!
+    
+    var selectionHandler : ((selected: MondoTransaction) -> Void)?
+    var selectedTransaction : MondoTransaction? {
+        if let indexPath = tableView.indexPathForSelectedRow,
+            transaction = transactions?[indexPath.row] {
+                return transaction
+        }
+        else {
+            return nil
+        }
+    }
+    
     private var transactions : [MondoTransaction]?
     
     override func viewDidLoad() {
@@ -86,6 +109,7 @@ class AccountTransactionsViewController : UIViewController {
             }
         }
     }
+    
 }
 
 extension AccountTransactionsViewController : UITableViewDataSource, UITableViewDelegate {
@@ -120,8 +144,9 @@ extension AccountTransactionsViewController : UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if let transaction = transactions?[indexPath.row] {
-            MondoAPI.instance.getTransactionForId(transaction.id) { (transaction, error) in
-                
+            selectionHandler?(selected: transaction)
+            MondoAPI.instance.annotateTransaction(transaction, withKey: "test", value: "hello") { (transaction, error) in
+            
                 debugPrint(transaction)
             }
         }
