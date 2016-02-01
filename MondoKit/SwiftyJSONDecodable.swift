@@ -131,6 +131,15 @@ extension Dictionary where Key : StringLiteralConvertible, Key.StringLiteralType
 
 extension JSON {
     
+    func decodeArrayForKey<T: SwiftyJSONDecodable>(key: String) throws -> Array<T>? {
+        
+        guard self.type != .Null else { throw SwiftyJSONDecodeError.NullValue }
+        guard self.type == .Dictionary else { throw SwiftyJSONDecodeError.WrongType }
+        
+        guard self[key] != JSON.null else { return nil }
+        
+        return try decodeArrayForKey(key) as Array<T>
+    }
     
     func decodeArrayForKey<T: SwiftyJSONDecodable>(key: String) throws -> Array<T> {
         
@@ -146,6 +155,16 @@ extension JSON {
         }
     }
     
+    func decodeValueForKey<T: SwiftyJSONDecodable>(key: String) throws -> T? {
+        
+        guard self.type != .Null else { throw SwiftyJSONDecodeError.NullValue }
+        guard self.type == .Dictionary else { throw SwiftyJSONDecodeError.WrongType }
+        
+        guard self[key] != JSON.null else { return nil }
+        
+        return try self.decodeValueForKey(key) as T
+    }
+    
     func decodeValueForKey<T: SwiftyJSONDecodable>(key: String) throws -> T {
         
         guard self.type != .Null else { throw SwiftyJSONDecodeError.NullValue }
@@ -159,6 +178,14 @@ extension JSON {
             throw SwiftyJSONDecodeError.ErrorForKey(key: key, error: error)
         }
     }
+    
+    func decodeAsValue<T: SwiftyJSONDecodable>() throws -> T? {
+        
+        guard self != JSON.null else { return nil }
+        
+        return try T(json: self)
+    }
+
     
     func decodeAsValue<T: SwiftyJSONDecodable>() throws -> T {
         

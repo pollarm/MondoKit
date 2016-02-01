@@ -166,7 +166,7 @@ public class MondoAPI {
         let since : Constraint?
         let before : NSDate?
         
-        public init(limit: Int? = nil, since: Constraint? = nil, before: NSDate?) {
+        public init(limit: Int? = nil, since: Constraint? = nil, before: NSDate? = nil) {
             self.limit = limit
             self.since = since
             self.before = before
@@ -511,6 +511,64 @@ extension MondoAPI {
                     let json = JSON(value)
                     do {
                         transactions = try json.decodeArrayForKey("transactions")
+                    }
+                    catch {
+                        debugPrint("Could not create MondoTransactions from \(json) \n Error: \(error)")
+                        anyError = error
+                    }
+                    
+                case .Failure(let error):
+                    debugPrint(error)
+                    anyError = error
+                }
+            }
+        }
+    }
+}
+
+extension MondoAPI {
+    
+    /**
+     Calls https://api.getmondo.co.uk/feed and calls the completion closure with
+     either an `[MondoFeedItem]` or an `ErrorType`
+     
+     - parameter account:       an account from which to get the accountId
+     - parameter completion:
+     */
+    public func listFeedForAccount(account: MondoAccount, completion: (items: [MondoFeedItem]?, error: ErrorType?) -> Void) {
+        
+        assert(initialised, "MondoAPI.instance not initialised!")
+        
+        if let authHeader = self.authHeader {
+            
+            var parameters = ["account_id" : account.id]
+            
+            Alamofire.request(.GET, MondoAPI.APIRoot+"feed", parameters: parameters, headers: authHeader).responseJSON { response in
+                
+                var items : [MondoFeedItem]?
+                var anyError : ErrorType?
+                
+                defer {
+                    self.dispatchCompletion() {
+                        completion(items: items, error: anyError)
+                    }
+                }
+                
+                guard let status = response.response?.statusCode where status == 200 else {
+                    
+                    debugPrint(response)
+                    anyError = self.errorFromResponse(response)
+                    return
+                }
+                
+                switch response.result {
+                    
+                case .Success(let value):
+                    debugPrint(value)
+                    
+                    let json = JSON(value)
+                    do {
+                        items = try json.decodeArrayForKey("items")
                     }
                     catch {
                         debugPrint("Could not create MondoTransactions from \(json) \n Error: \(error)")

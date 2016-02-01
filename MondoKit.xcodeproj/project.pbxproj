@@ -37,6 +37,9 @@
 		7FC712EB1C58BB7F00FE6A40 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC712EA1C58BB7F00FE6A40 /* KeychainAccess.framework */; };
 		7FC713341C59541700FE6A40 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 7FC713331C59541700FE6A40 /* README.md */; };
 		7FC713371C5ABB1F00FE6A40 /* TransactionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC713361C5ABB1F00FE6A40 /* TransactionDetailController.swift */; };
+		7FC713391C5EA8C300FE6A40 /* MondoFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC713381C5EA8C300FE6A40 /* MondoFeedItem.swift */; };
+		7FC7133B1C5FFBA000FE6A40 /* iso4217.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7FC7133A1C5FFBA000FE6A40 /* iso4217.csv */; };
+		7FC7133D1C5FFC9F00FE6A40 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7133C1C5FFC9F00FE6A40 /* CurrencyFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +94,9 @@
 		7FC712EA1C58BB7F00FE6A40 /* KeychainAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeychainAccess.framework; path = Carthage/Checkouts/KeychainAccess/Lib/build/Debug/KeychainAccess.framework; sourceTree = "<group>"; };
 		7FC713331C59541700FE6A40 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7FC713361C5ABB1F00FE6A40 /* TransactionDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailController.swift; sourceTree = "<group>"; };
+		7FC713381C5EA8C300FE6A40 /* MondoFeedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoFeedItem.swift; sourceTree = "<group>"; };
+		7FC7133A1C5FFBA000FE6A40 /* iso4217.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iso4217.csv; sourceTree = "<group>"; };
+		7FC7133C1C5FFC9F00FE6A40 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +190,8 @@
 				7F1E7EC61C517F33000B734B /* Assets.xcassets */,
 				7F1E7EC81C517F33000B734B /* LaunchScreen.storyboard */,
 				7F1E7ECB1C517F33000B734B /* Info.plist */,
+				7FC7133A1C5FFBA000FE6A40 /* iso4217.csv */,
+				7FC7133C1C5FFC9F00FE6A40 /* CurrencyFormatter.swift */,
 			);
 			path = MondoKitTestApp;
 			sourceTree = "<group>";
@@ -215,6 +223,7 @@
 				7F1E7EE91C576911000B734B /* MondoMerchant.swift */,
 				7F1E7EED1C576C4A000B734B /* MondoAttachment.swift */,
 				7F1E7EE61C557EF4000B734B /* MondoTransaction.swift */,
+				7FC713381C5EA8C300FE6A40 /* MondoFeedItem.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -359,6 +368,7 @@
 				7F1E7ECA1C517F33000B734B /* LaunchScreen.storyboard in Resources */,
 				7F1E7EC71C517F33000B734B /* Assets.xcassets in Resources */,
 				7F1E7ED01C517FD4000B734B /* MondoKeys.plist in Resources */,
+				7FC7133B1C5FFBA000FE6A40 /* iso4217.csv in Resources */,
 				7F1E7EC51C517F33000B734B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -372,6 +382,7 @@
 			files = (
 				7F1E7EDE1C543EFD000B734B /* SwiftyJSONDecodable.swift in Sources */,
 				7F1E7EDA1C5417E0000B734B /* MondoAPIOAuth.swift in Sources */,
+				7FC713391C5EA8C300FE6A40 /* MondoFeedItem.swift in Sources */,
 				7F1E7EF21C579FF4000B734B /* MondoAddress.swift in Sources */,
 				7F1E7ED21C518166000B734B /* MondoAPI.swift in Sources */,
 				7F1E7EE01C5442A4000B734B /* MondoAccount.swift in Sources */,
@@ -397,6 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F1E7EC21C517F33000B734B /* DetailViewController.swift in Sources */,
+				7FC7133D1C5FFC9F00FE6A40 /* CurrencyFormatter.swift in Sources */,
 				7FC713371C5ABB1F00FE6A40 /* TransactionDetailController.swift in Sources */,
 				7F1E7ED81C518797000B734B /* LoginController.swift in Sources */,
 				7F1E7EC01C517F33000B734B /* MasterViewController.swift in Sources */,

@@ -31,7 +31,7 @@ public struct MondoTransaction : Idable {
     public let localAmount : Int
     public let merchant : IdExpandable<MondoMerchant>?
     public let settled : NSDate?
-    public let notes : String
+    public let notes : String?
     
     public let attachments : [MondoAttachment]?
     
@@ -47,7 +47,7 @@ extension MondoTransaction : SwiftyJSONDecodable {
         currency = try json.decodeValueForKey("currency")
         amount = try json.decodeValueForKey("amount")
         description = try json.decodeValueForKey("description")
-        declineReason = try? json.decodeValueForKey("decline_reason")
+        declineReason = try json.decodeValueForKey("decline_reason")
         category = try json.decodeValueForKey("category")
         
         created = try json.decodeValueForKey("created") as JSONDate
@@ -57,13 +57,13 @@ extension MondoTransaction : SwiftyJSONDecodable {
         localCurrency = try json.decodeValueForKey("local_currency")
         localAmount = try json.decodeValueForKey("local_amount")
         
-        merchant = try? json.decodeValueForKey("merchant")
+        merchant = try json.decodeValueForKey("merchant")
         
         settled = try? json.decodeValueForKey("settled") as JSONDate
         
         notes = try json.decodeValueForKey("notes")
         
-        attachments = try? json.decodeArrayForKey("attachments")
+        attachments = try json.decodeArrayForKey("attachments")
 
         metaData = try json.decodeAsDictionaryForKey("metadata")
 

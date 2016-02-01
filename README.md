@@ -112,3 +112,15 @@ MondoAPI.instance.listTransactionsForAccount(account, pagination: MondoAPI.Pagin
 ```swift
 MondoAPI.instance.getTransactionForId(id, expand: "merchant") { (transaction, error) in ... }
 ```
+
+### annotateTransaction
+
+```swift
+MondoAPI.instance.annotateTransaction(transaction, withKey "aKey", value: "aValue") { (transaction, error) in ... }
+```
+
+### listFeedForAccount
+
+```swift
+MondoAPI.instance.listFeedForAccount(account) { (feedItems, error) in ... }
+```
