@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import SwiftyJSONDecodable
 
 public struct MondoAccount : Idable {
     

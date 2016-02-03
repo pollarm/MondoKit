@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import SwiftyJSONDecodable
 import KeychainAccess
 
 internal struct AuthData {

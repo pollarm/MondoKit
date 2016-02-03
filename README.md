@@ -21,7 +21,7 @@ To integrate MondoKit into your Xcode project using Carthage, specify it in your
 github "pollarm/MondoKit"
 ```
 
-Run `carthage update --platform iOS --no-use-binaries` to build the framework and it's dependencies and drag the built `Alamofire.framework, KeychainAccess.framework, SwiftyJSON.framework and MondoKit.framework` into your Xcode project.
+Run `carthage update --platform iOS --no-use-binaries` to build the framework and it's dependencies and drag the built `Alamofire.framework, KeychainAccess.framework, SwiftyJSONDecodable.framework, SwiftyJSON.framework and MondoKit.framework` into your Xcode project.
 
 
 ## Getting started

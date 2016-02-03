@@ -24,7 +24,6 @@
 		7F1E7ED81C518797000B734B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7ED71C518797000B734B /* LoginController.swift */; };
 		7F1E7EDA1C5417E0000B734B /* MondoAPIOAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7ED91C5417E0000B734B /* MondoAPIOAuth.swift */; };
 		7F1E7EDC1C543BA9000B734B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F1E7EDB1C543BA9000B734B /* SwiftyJSON.framework */; };
-		7F1E7EDE1C543EFD000B734B /* SwiftyJSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EDD1C543EFD000B734B /* SwiftyJSONDecodable.swift */; };
 		7F1E7EE01C5442A4000B734B /* MondoAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EDF1C5442A4000B734B /* MondoAccount.swift */; };
 		7F1E7EE31C54DFD4000B734B /* AccountsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EE21C54DFD4000B734B /* AccountsListViewController.swift */; };
 		7F1E7EE51C557013000B734B /* AccountDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E7EE41C557013000B734B /* AccountDetailsViewController.swift */; };
@@ -40,6 +39,7 @@
 		7FC713391C5EA8C300FE6A40 /* MondoFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC713381C5EA8C300FE6A40 /* MondoFeedItem.swift */; };
 		7FC7133B1C5FFBA000FE6A40 /* iso4217.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7FC7133A1C5FFBA000FE6A40 /* iso4217.csv */; };
 		7FC7133D1C5FFC9F00FE6A40 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7133C1C5FFC9F00FE6A40 /* CurrencyFormatter.swift */; };
+		7FC713731C629CEA00FE6A40 /* SwiftyJSONDecodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC713721C629CEA00FE6A40 /* SwiftyJSONDecodable.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +97,7 @@
 		7FC713381C5EA8C300FE6A40 /* MondoFeedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MondoFeedItem.swift; sourceTree = "<group>"; };
 		7FC7133A1C5FFBA000FE6A40 /* iso4217.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iso4217.csv; sourceTree = "<group>"; };
 		7FC7133C1C5FFC9F00FE6A40 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
+		7FC713721C629CEA00FE6A40 /* SwiftyJSONDecodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSONDecodable.framework; path = "Carthage/Checkouts/SwiftyJSONDecodable/build/Debug-iphoneos/SwiftyJSONDecodable.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FC713731C629CEA00FE6A40 /* SwiftyJSONDecodable.framework in Frameworks */,
 				7FC712EB1C58BB7F00FE6A40 /* KeychainAccess.framework in Frameworks */,
 				7F1E7EDC1C543BA9000B734B /* SwiftyJSON.framework in Frameworks */,
 				7F1E7EB41C51780C000B734B /* Alamofire.framework in Frameworks */,
@@ -133,9 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				7FC713331C59541700FE6A40 /* README.md */,
-				7FC712EA1C58BB7F00FE6A40 /* KeychainAccess.framework */,
-				7F1E7EDB1C543BA9000B734B /* SwiftyJSON.framework */,
-				7F1E7EB31C51780C000B734B /* Alamofire.framework */,
+				7FC713741C629ED800FE6A40 /* Frameworks */,
 				7F1E7E831C516FF5000B734B /* MondoKit */,
 				7F1E7E8F1C516FF6000B734B /* MondoKitTests */,
 				7F1E7EBC1C517F33000B734B /* MondoKitTestApp */,
@@ -234,6 +234,17 @@
 				7FC713361C5ABB1F00FE6A40 /* TransactionDetailController.swift */,
 			);
 			path = Transactions;
+			sourceTree = "<group>";
+		};
+		7FC713741C629ED800FE6A40 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7FC713721C629CEA00FE6A40 /* SwiftyJSONDecodable.framework */,
+				7FC712EA1C58BB7F00FE6A40 /* KeychainAccess.framework */,
+				7F1E7EDB1C543BA9000B734B /* SwiftyJSON.framework */,
+				7F1E7EB31C51780C000B734B /* Alamofire.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -380,7 +391,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F1E7EDE1C543EFD000B734B /* SwiftyJSONDecodable.swift in Sources */,
 				7F1E7EDA1C5417E0000B734B /* MondoAPIOAuth.swift in Sources */,
 				7FC713391C5EA8C300FE6A40 /* MondoFeedItem.swift in Sources */,
 				7F1E7EF21C579FF4000B734B /* MondoAddress.swift in Sources */,
@@ -550,6 +560,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftyJSONDecodable/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = MondoKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -568,6 +582,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftyJSONDecodable/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = MondoKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

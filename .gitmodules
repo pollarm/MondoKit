@@ -7,3 +7,6 @@
 [submodule "Carthage/Checkouts/KeychainAccess"]
 	path = Carthage/Checkouts/KeychainAccess
 	url = https://github.com/kishikawakatsumi/KeychainAccess.git
+[submodule "Carthage/Checkouts/SwiftyJSONDecodable"]
+	path = Carthage/Checkouts/SwiftyJSONDecodable
+	url = https://github.com/pollarm/SwiftyJSONDecodable.git

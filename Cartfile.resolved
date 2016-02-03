@@ -1,3 +1,4 @@
 github "Alamofire/Alamofire" "3.1.5"
 github "kishikawakatsumi/KeychainAccess" "v2.3.3"
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
+github "pollarm/SwiftyJSONDecodable" "0.1"
