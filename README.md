@@ -1,6 +1,9 @@
 # MondoKit
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/MondoKit.svg)](https://img.shields.io/cocoapods/v/MondoKit.svg)
+[![License](https://img.shields.io/cocoapods/l/MondoKit.svg?style=flat)](http://cocoapods.org/pods/MondoKit)
+[![Platform](https://img.shields.io/cocoapods/p/MondoKit.svg?style=flat)](http://cocoapods.org/pods/MondoKit)
 
 MondoKit is a Swift framework wrapping the Mondo API at https://getmondo.co.uk/docs/
 
@@ -23,6 +26,24 @@ github "pollarm/MondoKit"
 
 Run `carthage update --platform iOS --no-use-binaries` to build the framework and it's dependencies and drag the built `Alamofire.framework, KeychainAccess.framework, SwiftyJSONDecodable.framework, SwiftyJSON.framework and MondoKit.framework` into your Xcode project.
 
+### CocoaPods
+
+> CocoaPods 0.39.0+ is required to build MondoKit.
+
+To integrate MondoKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ruby
+platform :ios, '9.0'
+use_frameworks!
+
+pod 'MondoKit'
+```
+
+Then, run the following command:
+
+```bash
+$ pod install
+```
 
 ## Getting started
 
