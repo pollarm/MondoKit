@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
 spec.name = "MondoKit"
-spec.version = "0.1.6"
+spec.version = "0.1.7"
 spec.summary = "MondoKit is a Swift framework wrapping the Mondo API at https://getmondo.co.uk/docs/"
 spec.homepage = "https://github.com/pollarm/MondoKit"
 spec.license = { type: 'MIT', file: 'LICENSE' }
