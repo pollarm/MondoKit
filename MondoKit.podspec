@@ -14,5 +14,7 @@ spec.source_files = "MondoKit/**/*.{h,swift}"
 
 spec.dependency "SwiftyJSON", "~> 2.3"
 spec.dependency "SwiftyJSONDecodable", "~> 0.1"
+spec.dependency "Alamofire", "~> 3.0"
+spec.dependency "KeychainAccess"
 
 end
