@@ -113,6 +113,33 @@ extension MondoAPI {
     private static let AUTHRoot = "https://auth.getmondo.co.uk/"
     private static let AUTHRedirectScheme = "mondoapi"
     private static let AUTHRedirectUri = AUTHRedirectScheme + "://success"
+
+    /// Only to be used for development purposes to access your own account.
+    public func authorizeFromUsername(userName: String, andPassword password: String, completion: (success: Bool, error: ErrorType?) -> Void) -> Void {
+    
+        let parameters = [
+            "grant_type": "password",
+            "client_id": clientId!,
+            "client_secret": clientSecret!,
+            "username" : userName,
+            "password" : password
+        ]
+        
+        authorizeWithParameters(parameters, completion: completion)
+    }
+    
+    func reauthorizeFromRefreshToken(refreshToken: String, completion: (success: Bool, error: ErrorType?) -> Void) -> Void {
+        
+        let parameters = [
+            "grant_type": "refresh_token",
+            "client_id": clientId!,
+            "client_secret": clientSecret!,
+            "refresh_token" : refreshToken
+        ]
+        
+        authorizeWithParameters(parameters, completion: completion)
+        
+    }
     
     func authorizeFromCode(code : String, completion: (success: Bool, error: ErrorType?) -> Void) -> Void {
         
@@ -124,6 +151,12 @@ extension MondoAPI {
             "code" : code
         ]
         
+        authorizeWithParameters(parameters, completion: completion)
+        
+    }
+
+    private func authorizeWithParameters(parameters: [String:String], completion: (success: Bool, error: ErrorType?) -> Void) -> Void {
+    
         Alamofire.request(.POST, MondoAPI.APIRoot+"oauth2/token", parameters: parameters).responseJSON { response in
             
             var success : Bool = false
@@ -164,6 +197,9 @@ extension MondoAPI {
                     }
                     
                 }
+                else if let message = value["message"] as? String {
+                    anyError = LoginError.Other(message)
+                }
                 else {
                     anyError = LoginError.Unknown
                 }
@@ -174,7 +210,7 @@ extension MondoAPI {
                 anyError = error
             }
         }
-        
+
     }
 
 }

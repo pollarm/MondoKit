@@ -16,7 +16,7 @@ internal struct AuthData {
     
     private static let OAuth2CreatedAtKey: String = "MondoOAuth2CreatedAt"
     private static let OAuth2AccessTokenKey: String = "MondoOAuth2AccessToken"
-    //private let OAuth2RefreshTokenKey: String = "MondoOAuth2RefreshToken"
+    private static let OAuth2RefreshTokenKey: String = "MondoOAuth2RefreshToken"
     private static let OAuth2ExpiresInKey: String = "MondoOAuth2ExpiresInToken"
     
     let createdAt : NSDate
@@ -49,13 +49,14 @@ internal struct AuthData {
         self.createdAt = createdAtDate
         self.accessToken = accessToken
         self.expiresIn = Int(expiresIn)!
-        self.refreshToken = nil
+        self.refreshToken = keychain[AuthData.OAuth2RefreshTokenKey]
     }
     
     internal func storeInKeychain(keychain: Keychain) {
         
         keychain[AuthData.OAuth2CreatedAtKey] = createdAt.toJsonDateTime
         keychain[AuthData.OAuth2AccessTokenKey] = accessToken
+        keychain[AuthData.OAuth2RefreshTokenKey] = refreshToken
         keychain[AuthData.OAuth2ExpiresInKey] = String(expiresIn)
     }
 }

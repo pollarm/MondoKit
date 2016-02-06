@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         // Initialise MondoAPI with oauth2 id, secret
         
-        guard let mondoKeysPath = NSBundle.mainBundle().pathForResource("MondoKeys", ofType: "plist"),
+        guard let mondoKeysPath = NSBundle.mainBundle().pathForResource("MondoKeys2", ofType: "plist"),
             mondoKeys = NSDictionary(contentsOfFile: mondoKeysPath),
             mondoClientId = mondoKeys["clientId"] as? String,
             mondoClientSecret = mondoKeys["clientSecret"] as? String else {

@@ -40,6 +40,7 @@
 		7FC7133B1C5FFBA000FE6A40 /* iso4217.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7FC7133A1C5FFBA000FE6A40 /* iso4217.csv */; };
 		7FC7133D1C5FFC9F00FE6A40 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7133C1C5FFC9F00FE6A40 /* CurrencyFormatter.swift */; };
 		7FC713731C629CEA00FE6A40 /* SwiftyJSONDecodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC713721C629CEA00FE6A40 /* SwiftyJSONDecodable.framework */; };
+		7FC7137D1C6662E700FE6A40 /* MondoKeys2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FC7137C1C6662E700FE6A40 /* MondoKeys2.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		7FC7133C1C5FFC9F00FE6A40 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		7FC713721C629CEA00FE6A40 /* SwiftyJSONDecodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSONDecodable.framework; path = "Carthage/Checkouts/SwiftyJSONDecodable/build/Debug-iphoneos/SwiftyJSONDecodable.framework"; sourceTree = "<group>"; };
 		7FC713791C63512B00FE6A40 /* MondoKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = MondoKit.podspec; sourceTree = "<group>"; };
+		7FC7137C1C6662E700FE6A40 /* MondoKeys2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MondoKeys2.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 				7F1E7EE11C54DFA8000B734B /* Accounts */,
 				7F1E7ED61C518766000B734B /* Login */,
 				7F1E7ECF1C517FD4000B734B /* MondoKeys.plist */,
+				7FC7137C1C6662E700FE6A40 /* MondoKeys2.plist */,
 				7F1E7EBD1C517F33000B734B /* AppDelegate.swift */,
 				7F1E7EBF1C517F33000B734B /* MasterViewController.swift */,
 				7F1E7EC11C517F33000B734B /* DetailViewController.swift */,
@@ -381,6 +384,7 @@
 				7F1E7ED01C517FD4000B734B /* MondoKeys.plist in Resources */,
 				7FC7133B1C5FFBA000FE6A40 /* iso4217.csv in Resources */,
 				7F1E7EC51C517F33000B734B /* Main.storyboard in Resources */,
+				7FC7137D1C6662E700FE6A40 /* MondoKeys2.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

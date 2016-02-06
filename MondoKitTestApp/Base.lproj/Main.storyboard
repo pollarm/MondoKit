@@ -18,21 +18,68 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MeO-t7-21A">
-                                <rect key="frame" x="276.5" y="285" width="47" height="30"/>
-                                <state key="normal" title="Sign In"/>
-                                <connections>
-                                    <action selector="loginPressed:" destination="25N-k2-CjT" eventType="touchUpInside" id="SxP-nY-Pxa"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yVK-KL-Gvr">
+                                <rect key="frame" x="20" y="52" width="560" height="156.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LdB-PA-DdV">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="106"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fhn-UR-7tN">
+                                                <rect key="frame" x="0.0" y="0.0" width="560" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MYr-qK-0d2">
+                                                <rect key="frame" x="0.0" y="38" width="560" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L86-xW-qpw">
+                                                <rect key="frame" x="0.0" y="76" width="560" height="30"/>
+                                                <state key="normal" title="Sign In"/>
+                                                <connections>
+                                                    <action selector="loginWithPassword:" destination="25N-k2-CjT" eventType="touchUpInside" id="jsY-0a-r8H"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Z1g-Qp-wsn">
+                                        <rect key="frame" x="0.0" y="106" width="560" height="50.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URB-ci-VmX">
+                                                <rect key="frame" x="272" y="0.0" width="16" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MeO-t7-21A">
+                                                <rect key="frame" x="207" y="20" width="145" height="30"/>
+                                                <state key="normal" title="Sign In with web flow"/>
+                                                <connections>
+                                                    <action selector="loginPressed:" destination="25N-k2-CjT" eventType="touchUpInside" id="SxP-nY-Pxa"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="MeO-t7-21A" firstAttribute="centerY" secondItem="ZDN-Jk-vzO" secondAttribute="centerY" id="Bpi-NA-sYP"/>
-                            <constraint firstItem="MeO-t7-21A" firstAttribute="centerX" secondItem="ZDN-Jk-vzO" secondAttribute="centerX" id="C6H-HF-znN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yVK-KL-Gvr" secondAttribute="trailing" id="5Tm-u2-bBu"/>
+                            <constraint firstItem="yVK-KL-Gvr" firstAttribute="leading" secondItem="ZDN-Jk-vzO" secondAttribute="leadingMargin" id="Frv-ph-zqg"/>
+                            <constraint firstItem="yVK-KL-Gvr" firstAttribute="centerY" secondItem="ZDN-Jk-vzO" secondAttribute="centerY" id="MaT-2S-IkZ"/>
+                            <constraint firstItem="yVK-KL-Gvr" firstAttribute="top" secondItem="Xdy-sr-rcr" secondAttribute="bottom" constant="32" id="eja-C3-0n0"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="MaT-2S-IkZ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
+                        <outlet property="passwordField" destination="MYr-qK-0d2" id="2Pj-Cz-u3r"/>
+                        <outlet property="usernameField" destination="fhn-UR-7tN" id="CC2-S4-9UM"/>
                         <segue destination="Ua1-1T-OHW" kind="showDetail" identifier="loginSuccess" id="dHb-Tg-awS"/>
                     </connections>
                 </viewController>
