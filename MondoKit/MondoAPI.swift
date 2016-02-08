@@ -159,6 +159,20 @@ public class MondoAPI {
         return OAuthViewController(mondoApi: self, onCompletion: completion)
     }
     
+    /**
+     Cancels any outstanding operations on the queue and nils out authData
+     */
+    public func signOut() {
+        apiOperationQueue.cancelAllOperations()
+        apiOperationQueue.addOperationWithBlock() { [unowned self] in
+            self.keychain[AuthData.OAuth2CreatedAtKey] = nil
+            self.keychain[AuthData.OAuth2AccessTokenKey] = nil
+            self.keychain[AuthData.OAuth2RefreshTokenKey] = nil
+            self.keychain[AuthData.OAuth2ExpiresInKey] = nil
+            self.authData = nil
+        }
+    }
+    
     // MARK: Pagination
     
     /**

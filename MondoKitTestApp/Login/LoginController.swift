@@ -19,6 +19,7 @@ class LoginController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        passwordField.text = nil
         continueSessionView.hidden =  !MondoAPI.instance.isAuthorized
     }
 }
@@ -94,6 +95,10 @@ extension LoginController {
         else {
             continueSessionView.hidden = true
         }
+    }
+    
+    @IBAction func signOut(unwindSegue: UIStoryboardSegue) {
+        MondoAPI.instance.signOut()
     }
 }
 

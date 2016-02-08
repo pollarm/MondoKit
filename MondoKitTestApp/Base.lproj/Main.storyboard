@@ -160,12 +160,19 @@
                             <constraint firstAttribute="trailing" secondItem="9N3-kk-GAc" secondAttribute="trailing" id="vlf-Mg-CRK"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Accounts" id="Wp2-4s-VX8"/>
+                    <navigationItem key="navigationItem" title="Accounts" id="Wp2-4s-VX8">
+                        <barButtonItem key="leftBarButtonItem" title="Sign Out" id="VhF-jh-ya7">
+                            <connections>
+                                <segue destination="TD3-9I-Ufa" kind="unwind" unwindAction="signOut:" id="nEa-p8-P89"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="9N3-kk-GAc" id="ivV-nK-HOX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SXb-TK-swB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="TD3-9I-Ufa" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-691" y="-1058"/>
         </scene>
