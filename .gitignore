@@ -34,3 +34,4 @@ Carthage/Build
 
 # Mondo Secrets
 **/MondoKeys.plist
+**/MondoKeys*.plist
