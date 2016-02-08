@@ -36,7 +36,6 @@
 		7F92D7611C669273002E2A63 /* MondoAPIOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F92D7601C669273002E2A63 /* MondoAPIOperation.swift */; };
 		7F92D7631C688DF4002E2A63 /* MondoAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F92D7621C688DF4002E2A63 /* MondoAPIError.swift */; };
 		7FC712EB1C58BB7F00FE6A40 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC712EA1C58BB7F00FE6A40 /* KeychainAccess.framework */; };
-		7FC713341C59541700FE6A40 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 7FC713331C59541700FE6A40 /* README.md */; };
 		7FC713371C5ABB1F00FE6A40 /* TransactionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC713361C5ABB1F00FE6A40 /* TransactionDetailController.swift */; };
 		7FC713391C5EA8C300FE6A40 /* MondoFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC713381C5EA8C300FE6A40 /* MondoFeedItem.swift */; };
 		7FC7133B1C5FFBA000FE6A40 /* iso4217.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7FC7133A1C5FFBA000FE6A40 /* iso4217.csv */; };
@@ -411,7 +410,6 @@
 				7F1E7EE71C557EF4000B734B /* MondoTransaction.swift in Sources */,
 				7F1E7EEE1C576C4A000B734B /* MondoAttachment.swift in Sources */,
 				7F92D7631C688DF4002E2A63 /* MondoAPIError.swift in Sources */,
-				7FC713341C59541700FE6A40 /* README.md in Sources */,
 				7F92D7611C669273002E2A63 /* MondoAPIOperation.swift in Sources */,
 				7F1E7EEA1C576911000B734B /* MondoMerchant.swift in Sources */,
 			);

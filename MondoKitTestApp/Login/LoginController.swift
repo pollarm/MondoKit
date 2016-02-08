@@ -14,6 +14,13 @@ class LoginController: UIViewController {
 
     @IBOutlet private var usernameField : UITextField!
     @IBOutlet private var passwordField : UITextField!
+    @IBOutlet private var continueSessionView : UIView!
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        continueSessionView.hidden =  !MondoAPI.instance.isAuthorized
+    }
 }
 
 extension LoginController {
@@ -77,6 +84,15 @@ extension LoginController {
             }
             
             presentViewController(oauthViewController, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func continueSession(sender : UIButton) {
+        if MondoAPI.instance.isAuthorized {
+            self.performSegueWithIdentifier("loginSuccess", sender: self)
+        }
+        else {
+            continueSessionView.hidden = true
         }
     }
 }

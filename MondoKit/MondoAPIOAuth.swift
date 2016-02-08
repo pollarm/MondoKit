@@ -102,10 +102,10 @@ extension MondoAPI {
             "password" : password
         ]
         
-        authorizeWithParameters(parameters, completion: completion)
+        apiOperationQueue.addOperation(authorizeOperationWithParameters(parameters, completion: completion))
     }
     
-    func reauthorizeFromRefreshToken(refreshToken: String, completion: (success: Bool, error: ErrorType?) -> Void) -> Void {
+    func reauthorizeOperationFromRefreshToken(refreshToken: String, completion: (success: Bool, error: ErrorType?) -> Void) -> MondoAPIOperation {
         
         let parameters = [
             "grant_type": "refresh_token",
@@ -114,7 +114,7 @@ extension MondoAPI {
             "refresh_token" : refreshToken
         ]
         
-        authorizeWithParameters(parameters, completion: completion)
+        return authorizeOperationWithParameters(parameters, completion: completion)
         
     }
     
@@ -128,14 +128,13 @@ extension MondoAPI {
             "code" : code
         ]
         
-        authorizeWithParameters(parameters, completion: completion)
+        apiOperationQueue.addOperation(authorizeOperationWithParameters(parameters, completion: completion))
         
     }
-
-    private func authorizeWithParameters(parameters: [String:String], completion: (success: Bool, error: ErrorType?) -> Void) -> Void {
     
-        let request = alamofireManager.request(.POST, MondoAPI.APIRoot+"oauth2/token", parameters: parameters)
-        let operation = MondoAPIOperation(request: request) { (json, error) in
+    private func authorizeOperationWithParameters(parameters: [String:String], completion: (success: Bool, error: ErrorType?) -> Void) -> MondoAPIOperation {
+        
+        let operation = MondoAPIOperation(method: .POST, urlString: MondoAPI.APIRoot+"oauth2/token", parameters: parameters) { (json, error) in
             
             var success : Bool = false
             var anyError : ErrorType?
@@ -163,7 +162,7 @@ extension MondoAPI {
             }
             
         }
-        apiOperationQueue.addOperation(operation)
+        return operation
     }
 
 }

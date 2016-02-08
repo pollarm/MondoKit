@@ -49,9 +49,11 @@ class MondoAPIOperation: NSOperation {
         
         _executing = true
         
-        request.resume()
+        request = MondoAPI.instance.alamofireManager.request(method, urlString, parameters: parameters, headers: authHeader?())
         
-        request.response(queue: MondoAPIOperation.ResponseQueue, responseSerializer: Request.JSONResponseSerializer()) { [unowned self] response in
+        request!.resume()
+        
+        request!.response(queue: MondoAPIOperation.ResponseQueue, responseSerializer: Request.JSONResponseSerializer()) { [unowned self] response in
         
             guard !self.cancelled else {
                 self._executing = false
@@ -94,13 +96,24 @@ class MondoAPIOperation: NSOperation {
     
     private static let ResponseQueue : dispatch_queue_t = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
     
-    private var request : Alamofire.Request
+    private var method : Alamofire.Method
+    private var urlString : URLStringConvertible
+    private var parameters : [String : AnyObject]?
+    private var authHeader: (()->[String:String]?)?
+    
+    private var request : Alamofire.Request?
     private var responseHandler : ResponseHandler
     
-    init(request: Alamofire.Request, responseHandler: ResponseHandler) {
+    init(method: Alamofire.Method, urlString: URLStringConvertible,
+        parameters: [String : AnyObject]? = nil,
+        authHeader: ()->[String:String]? = { return nil },
+        responseHandler: ResponseHandler) {
         
-        self.request = request
-        self.responseHandler = responseHandler
+            self.method = method
+            self.urlString = urlString
+            self.parameters = parameters
+            self.authHeader = authHeader
+            self.responseHandler = responseHandler
     }
 
     private func errorFromResponse(response: Alamofire.Response<AnyObject, NSError>) -> ErrorType {
