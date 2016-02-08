@@ -10,29 +10,6 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-public protocol ErrorWithLocalizedDescription {
-    
-    func getLocalizedDescription() -> String?
-}
-
-public enum LoginError : ErrorType, ErrorWithLocalizedDescription {
-    
-    case RequestFailed(String)
-    case CouldNotAuthenticate(String)
-    case Other(String)
-    case Unknown
-    
-    public func getLocalizedDescription() -> String? {
-        
-        switch self {
-        case .RequestFailed(let s): return s
-        case .CouldNotAuthenticate(let s): return s
-        case .Other(let s): return s
-        default:
-            return "Unknown error"
-        }
-    }
-}
 
 class OAuthViewController : UIViewController {
     
@@ -157,7 +134,8 @@ extension MondoAPI {
 
     private func authorizeWithParameters(parameters: [String:String], completion: (success: Bool, error: ErrorType?) -> Void) -> Void {
     
-        Alamofire.request(.POST, MondoAPI.APIRoot+"oauth2/token", parameters: parameters).responseJSON { response in
+        let request = alamofireManager.request(.POST, MondoAPI.APIRoot+"oauth2/token", parameters: parameters)
+        let operation = MondoAPIOperation(request: request) { (json, error) in
             
             var success : Bool = false
             var anyError : ErrorType?
@@ -168,49 +146,24 @@ extension MondoAPI {
                 }
             }
             
-            switch response.result {
-                
-            case .Success(let value):
-                
-                debugPrint(value)
-                
-                let json = JSON(value)
-                
-                if let _ = json["user_id"].string,
-                    accessToken = json["access_token"].string,
-                    expiresIn = json["expires_in"].int {
-                        
-                        let refreshToken = value["refresh_token"] as? String
-                        self.authData = AuthData(createdAt: NSDate(), accessToken: accessToken, expiresIn: expiresIn, refreshToken: refreshToken)
-                        self.authData?.storeInKeychain(self.keychain)
-                        success = true
-                }
-                else if let code = value["code"] as? String, message = value["message"] as? String {
+            guard error == nil else { anyError = error; return }
+            
+            if let json = json,
+                _ = json["user_id"].string,
+                accessToken = json["access_token"].string,
+                expiresIn = json["expires_in"].int {
                     
-                    switch code {
-                    case "internal_service.request_failed":
-                        anyError = LoginError.RequestFailed(message)
-                    case "bad_request.could_not_authenticate":
-                        anyError = LoginError.CouldNotAuthenticate(message)
-                    default:
-                        anyError = LoginError.Other(message)
-                    }
-                    
-                }
-                else if let message = value["message"] as? String {
-                    anyError = LoginError.Other(message)
-                }
-                else {
-                    anyError = LoginError.Unknown
-                }
-                
-            case .Failure(let error):
-                
-                debugPrint(error)
-                anyError = error
+                    let refreshToken = json["refresh_token"].string
+                    self.authData = AuthData(createdAt: NSDate(), accessToken: accessToken, expiresIn: expiresIn, refreshToken: refreshToken)
+                    self.authData!.storeInKeychain(self.keychain)
+                    success = true
             }
+            else {
+                anyError = MondoAPIError.Unknown
+            }
+            
         }
-
+        apiOperationQueue.addOperation(operation)
     }
 
 }

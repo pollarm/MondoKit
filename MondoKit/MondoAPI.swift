@@ -94,7 +94,23 @@ public class MondoAPI {
         return clientId != nil && clientSecret != nil
     }
     
-    private init() { }
+    internal let alamofireManager : Alamofire.Manager
+    
+    /**
+     MondoAPI uses this `NSOperationQueue` to manage the execution of API calls.
+     This ensures all API calls are run on a dispatch_queue other than the main_queue and also provides the ability to manage dependencies if necessary.
+     */
+    internal let apiOperationQueue : NSOperationQueue = {
+        let queue = NSOperationQueue()
+        queue.underlyingQueue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
+        return queue
+    }()
+    
+    private init() {
+        let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        alamofireManager = Alamofire.Manager(configuration: sessionConfiguration)
+        alamofireManager.startRequestsImmediately = false
+    }
     
     public var isAuthorized : Bool {
         
@@ -197,20 +213,6 @@ public class MondoAPI {
         dispatch_async(dispatch_get_main_queue(), completion)
     }
     
-    private func errorFromResponse(response: Alamofire.Response<AnyObject, NSError>) -> NSError {
-        
-        switch response.result {
-            
-        case .Success(let value):
-            
-            let json = JSON(value)
-            let message = json["message"].string
-            return NSError(domain: "MondoAPI", code: response.response?.statusCode ?? -1, userInfo: [NSLocalizedDescriptionKey:message ?? ""])
-            
-        case .Failure(let error):
-            return error
-        }
-    }
 }
 
 // MARK: listAccounts
@@ -229,7 +231,8 @@ extension MondoAPI {
         
         if let authHeader = self.authHeader {
             
-            Alamofire.request(.GET, MondoAPI.APIRoot+"accounts", headers: authHeader).responseJSON { response in
+            let request = alamofireManager.request(.GET, MondoAPI.APIRoot+"accounts", headers: authHeader)
+            let operation = MondoAPIOperation(request: request) { (json, error) in
                 
                 var mondoAccounts : [MondoAccount]?
                 var anyError : ErrorType?
@@ -240,39 +243,26 @@ extension MondoAPI {
                     }
                 }
                 
-                guard let status = response.response?.statusCode where status == 200 else {
-                    
-                    debugPrint(response)
-                    anyError = self.errorFromResponse(response)
-                    return
-                }
+                guard error == nil else { return }
                 
-                switch response.result {
-                    
-                case .Success(let value):
-                    
-                    debugPrint(value)
-                    
-                    mondoAccounts = [MondoAccount]()
-                    
-                    let json = JSON(value)
-                    if let accounts = json["accounts"].array {
-                        for accountJson in accounts {
-                            do {
-                                let mondoAccount = try MondoAccount(json: accountJson)
-                                mondoAccounts!.append(mondoAccount)
-                            }
-                            catch {
-                                debugPrint("Could not create MondoAccount from \(accountJson) \n Error: \(error)")
-                            }
+                mondoAccounts = [MondoAccount]()
+                
+                if let json = json, accounts = json["accounts"].array {
+                    for accountJson in accounts {
+                        do {
+                            let mondoAccount = try MondoAccount(json: accountJson)
+                            mondoAccounts!.append(mondoAccount)
+                        }
+                        catch {
+                            debugPrint("Could not create MondoAccount from \(accountJson) \n Error: \(error)")
+                            anyError = error
                         }
                     }
-                    
-                case .Failure(let error):
-                    
-                    debugPrint(error)
                 }
+                
             }
+            
+            apiOperationQueue.addOperation(operation)
         }
     }
 }
@@ -294,7 +284,8 @@ extension MondoAPI {
         
         if let authHeader = self.authHeader {
             
-            Alamofire.request(.GET, MondoAPI.APIRoot+"balance", parameters: ["account_id" : account.id], headers: authHeader).responseJSON { response in
+            let request = alamofireManager.request(.GET, MondoAPI.APIRoot+"balance", parameters: ["account_id" : account.id], headers: authHeader)
+            let operation = MondoAPIOperation(request: request) { (json, error) in
                 
                 var balance : MondoAccountBalance?
                 var anyError : ErrorType?
@@ -305,19 +296,9 @@ extension MondoAPI {
                     }
                 }
                 
-                guard let status = response.response?.statusCode where status == 200 else {
-                    
-                    debugPrint(response)
-                    anyError = self.errorFromResponse(response)
-                    return
-                }
+                guard error == nil else { return }
                 
-                switch response.result {
-                    
-                case .Success(let value):
-                    debugPrint(value)
-                    
-                    let json = JSON(value)
+                if let json = json {
                     do {
                         balance = try MondoAccountBalance(json: json)
                     }
@@ -325,11 +306,10 @@ extension MondoAPI {
                         debugPrint("Could not create MondoAccountBalance from \(json) \n Error: \(error)")
                         anyError = error
                     }
-                    
-                case .Failure(let error):
-                    debugPrint(error)
                 }
             }
+            
+            apiOperationQueue.addOperation(operation)
         }
     }
 }
@@ -357,7 +337,8 @@ extension MondoAPI {
                 parameters["expand[]"] = expand
             }
             
-            Alamofire.request(.GET, MondoAPI.APIRoot+"transactions/"+transactionId, parameters: parameters, headers: authHeader).responseJSON { response in
+            let request = alamofireManager.request(.GET, MondoAPI.APIRoot+"transactions/"+transactionId, parameters: parameters, headers: authHeader)
+            let operation = MondoAPIOperation(request: request) { (json, error) in
                 
                 var transaction : MondoTransaction?
                 var anyError : ErrorType?
@@ -368,19 +349,9 @@ extension MondoAPI {
                     }
                 }
                 
-                guard let status = response.response?.statusCode where status == 200 else {
-                    
-                    debugPrint(response)
-                    anyError = self.errorFromResponse(response)
-                    return
-                }
+                guard error == nil else { return }
                 
-                switch response.result {
-                    
-                case .Success(let value):
-                    debugPrint(value)
-                    
-                    let json = JSON(value)
+                if let json = json {
                     do {
                         transaction = try json.decodeValueForKey("transaction") as MondoTransaction
                     }
@@ -388,12 +359,11 @@ extension MondoAPI {
                         debugPrint("Could not create MondoTransaction from \(json) \n Error: \(error)")
                         anyError = error
                     }
-                    
-                case .Failure(let error):
-                    debugPrint(error)
-                    anyError = error
                 }
             }
+            
+            apiOperationQueue.addOperation(operation)
+
         }
     }
 }
@@ -417,7 +387,8 @@ extension MondoAPI {
             
             var parameters = ["metadata["+key+"]":value]
             
-            Alamofire.request(.PATCH, MondoAPI.APIRoot+"transactions/"+transaction.id, parameters: parameters, headers: authHeader).responseJSON { response in
+            let request = alamofireManager.request(.PATCH, MondoAPI.APIRoot+"transactions/"+transaction.id, parameters: parameters, headers: authHeader)
+            let operation = MondoAPIOperation(request: request) { (json, error) in
                 
                 var transaction : MondoTransaction?
                 var anyError : ErrorType?
@@ -428,19 +399,9 @@ extension MondoAPI {
                     }
                 }
                 
-                guard let status = response.response?.statusCode where status == 200 else {
-                    
-                    debugPrint(response)
-                    anyError = self.errorFromResponse(response)
-                    return
-                }
+                guard error == nil else { return }
                 
-                switch response.result {
-                    
-                case .Success(let value):
-                    debugPrint(value)
-                    
-                    let json = JSON(value)
+                if let json = json {
                     do {
                         transaction = try json.decodeValueForKey("transaction") as MondoTransaction
                     }
@@ -448,14 +409,11 @@ extension MondoAPI {
                         debugPrint("Could not create MondoTransaction from \(json) \n Error: \(error)")
                         anyError = error
                     }
-                    
-                case .Failure(let error):
-                    debugPrint(error)
-                    anyError = error
                 }
             }
+            
+            apiOperationQueue.addOperation(operation)
         }
-
     }
 }
 
@@ -487,8 +445,9 @@ extension MondoAPI {
                 pagination.parameters.forEach { parameters.updateValue($1, forKey: $0) }
             }
             
-            Alamofire.request(.GET, MondoAPI.APIRoot+"transactions", parameters: parameters, headers: authHeader).responseJSON { response in
-                
+            let request = alamofireManager.request(.GET, MondoAPI.APIRoot+"transactions", parameters: parameters, headers: authHeader)
+            let operation = MondoAPIOperation(request: request) { (json, error) in
+            
                 var transactions : [MondoTransaction]?
                 var anyError : ErrorType?
                 
@@ -498,19 +457,9 @@ extension MondoAPI {
                     }
                 }
                 
-                guard let status = response.response?.statusCode where status == 200 else {
-                    
-                    debugPrint(response)
-                    anyError = self.errorFromResponse(response)
-                    return
-                }
+                guard error == nil else { return }
                 
-                switch response.result {
-                    
-                case .Success(let value):
-                    debugPrint(value)
-                    
-                    let json = JSON(value)
+                if let json = json {
                     do {
                         transactions = try json.decodeArrayForKey("transactions")
                     }
@@ -518,12 +467,10 @@ extension MondoAPI {
                         debugPrint("Could not create MondoTransactions from \(json) \n Error: \(error)")
                         anyError = error
                     }
-                    
-                case .Failure(let error):
-                    debugPrint(error)
-                    anyError = error
                 }
             }
+            
+            apiOperationQueue.addOperation(operation)
         }
     }
 }
@@ -545,8 +492,9 @@ extension MondoAPI {
             
             var parameters = ["account_id" : account.id]
             
-            Alamofire.request(.GET, MondoAPI.APIRoot+"feed", parameters: parameters, headers: authHeader).responseJSON { response in
-                
+            let request = alamofireManager.request(.GET, MondoAPI.APIRoot+"feed", parameters: parameters, headers: authHeader)
+            let operation = MondoAPIOperation(request: request) { (json, error) in
+            
                 var items : [MondoFeedItem]?
                 var anyError : ErrorType?
                 
@@ -555,20 +503,10 @@ extension MondoAPI {
                         completion(items: items, error: anyError)
                     }
                 }
+
+                guard error == nil else { return }
                 
-                guard let status = response.response?.statusCode where status == 200 else {
-                    
-                    debugPrint(response)
-                    anyError = self.errorFromResponse(response)
-                    return
-                }
-                
-                switch response.result {
-                    
-                case .Success(let value):
-                    debugPrint(value)
-                    
-                    let json = JSON(value)
+                if let json = json {
                     do {
                         items = try json.decodeArrayForKey("items")
                     }
@@ -576,12 +514,9 @@ extension MondoAPI {
                         debugPrint("Could not create MondoTransactions from \(json) \n Error: \(error)")
                         anyError = error
                     }
-                    
-                case .Failure(let error):
-                    debugPrint(error)
-                    anyError = error
                 }
             }
+            apiOperationQueue.addOperation(operation)
         }
     }
 }
