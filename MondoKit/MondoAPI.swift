@@ -89,7 +89,7 @@ public class MondoAPI {
     internal var authData : AuthData?
     internal var keychain : Keychain!
     
-    private var initialised : Bool {
+    public var initialised : Bool {
         
         return clientId != nil && clientSecret != nil
     }
@@ -134,14 +134,19 @@ public class MondoAPI {
      ie call `MondAPI.instance.initialiseWithClientId(:clientSecret)` in `applicationDidFinishLaunchingWithOptions`
      
      */
-    public func initialiseWithClientId(clientId : String, clientSecret : String) {
+    public func initialiseWithClientId(clientId : String, clientSecret : String, keychainAccessGroup: String? = nil) {
         
         assert(!initialised, "MondoAPI.instance already initialised!")
         
         self.clientId = clientId
         self.clientSecret = clientSecret
         
-        keychain = Keychain(service: MondoAPI.APIRoot + clientId)
+        if let keychainAccessGroup = keychainAccessGroup {
+            keychain = Keychain(service: MondoAPI.APIRoot + clientId, accessGroup: keychainAccessGroup)
+        }
+        else {
+            keychain = Keychain(service: MondoAPI.APIRoot + clientId)
+        }
         authData = AuthData(keychain: keychain)
     }
     
